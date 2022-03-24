@@ -10,7 +10,7 @@ import UIKit
 class RCSCBundle: Bundle {
     static var bundleURL: URL {
         let bundleURL = Bundle(for: RCSCBundle.self).bundleURL
-        return bundleURL.appendingPathComponent("RCSceneCommunity.bundle")
+        return bundleURL.appendingPathComponent("RCSceneRoom.bundle")
     }
 
     static var sharedBundle: RCSCBundle? {
