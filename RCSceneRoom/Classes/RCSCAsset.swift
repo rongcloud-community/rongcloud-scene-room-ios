@@ -204,7 +204,6 @@ public enum RCSCAsset {
     public static let videoThumbEditIcon = ImageAsset(name: "video_thumb_edit_icon")
     public static let videoTypeSelected = ImageAsset(name: "video_type_selected")
     public static let videoTypeUnselected = ImageAsset(name: "video_type_unselected")
-    public static let voiceVolumeTube1 = ImageAsset(name: "voice_volume_tube-1")
     public static let voiceVolumeTube = ImageAsset(name: "voice_volume_tube")
   }
   public enum Colors {
