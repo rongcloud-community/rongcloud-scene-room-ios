@@ -21,7 +21,7 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum RCSCAsset {
-  public enum Assets {
+  public enum Images {
     public static let rcBeautyEffect = ImageAsset(name: "rc_beauty_effect")
     public static let rcBeautyMakeup = ImageAsset(name: "rc_beauty_makeup")
     public static let rcBeautyRetouch = ImageAsset(name: "rc_beauty_retouch")
