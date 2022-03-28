@@ -25,6 +25,7 @@ PODS:
     - RCSceneMessage
     - RCSceneService (>= 0.0.2)
     - Reusable
+    - RongCloudIM/IMKit
     - SnapKit
     - SVProgressHUD
   - RCSceneService (0.0.2):
@@ -43,6 +44,8 @@ PODS:
     - RongCloudIM/IMLibCore
   - RongCloudIM/Discussion (5.2.1):
     - RongCloudIM/IMLibCore
+  - RongCloudIM/IMKit (5.2.1):
+    - RongCloudIM/IMLib
   - RongCloudIM/IMLib (5.2.1):
     - RongCloudIM/ChatRoom
     - RongCloudIM/CustomerService
@@ -99,7 +102,7 @@ SPEC CHECKSUMS:
   RCSceneChatroomKit: 5fa306001c88bc075365a3ed8a76776e151670f2
   RCSceneFoundation: 6d91dda21fe9cc4aab6718dd6940a7e29e028955
   RCSceneMessage: 926880788dcb19bf49c9631e82e1e8abc2957397
-  RCSceneRoom: d43c722022dedbd368b630bb9a3d683ea53f8376
+  RCSceneRoom: 0cac09fd129b5e58ea0c63924dd5001b4863e27a
   RCSceneService: 8810bb3c043162e0eca81a13bddb95e0fb01ca03
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
