@@ -1,14 +1,14 @@
 //
 //  SceneRoomUserOperation.swift
-//  RCSceneModular
+//  RCSceneRoom
 //
 //  Created by shaoshuai on 2022/2/26.
 //
 
 import Foundation
 
-public struct UserOperationDependency {
-    public let room: VoiceRoom
+public struct RCSceneRoomUserOperationDependency {
+    public let room: RCSceneRoom
     
     public let userId: String
     public let userRole: SceneRoomUserType
@@ -35,7 +35,7 @@ public struct UserOperationDependency {
         return .audience
     }
     
-    public init(room: VoiceRoom,
+    public init(room: RCSceneRoom,
                 userId: String,
                 userRole: SceneRoomUserType = .audience,
                 userSeatIndex: Int? = nil,

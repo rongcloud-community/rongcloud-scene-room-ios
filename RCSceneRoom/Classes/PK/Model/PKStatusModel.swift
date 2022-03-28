@@ -7,6 +7,23 @@
 
 import Foundation
 
+public enum PKStatus: Int {
+    case begin = 0
+    case pause
+    case close
+    
+    public var name: String {
+        switch self {
+        case .begin:
+            return "开始"
+        case .pause:
+            return "暂停"
+        case .close:
+            return "结束"
+        }
+    }
+}
+
 public struct PKStatusModel: Codable {
     public let statusMsg: Int
     public var timeDiff: Int

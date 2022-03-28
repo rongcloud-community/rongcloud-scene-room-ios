@@ -1,6 +1,6 @@
 //
 //  RCSceneLeaveViewProtocol.swift
-//  RCSceneModular
+//  RCSceneRoom
 //
 //  Created by xuefeng on 2022/3/1.
 //

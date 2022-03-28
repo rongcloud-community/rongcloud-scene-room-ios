@@ -1,21 +1,5 @@
-//
-//  RCSceneModulorProtocol.swift
-//  RCSceneModular
-//
-//  Created by shaoshuai on 2022/2/26.
-//
 
 import Foundation
-
-public protocol InputPasswordProtocol: AnyObject {
-    func passwordDidEnter(password: String)
-    func passwordDidVerify(_ room: VoiceRoom) //room: VoiceRoom
-}
-
-public extension InputPasswordProtocol {
-    func passwordDidEnter(password: String) {}
-    func passwordDidVerify(_ room: VoiceRoom) {}
-}
 
 public protocol RCRoomCycleProtocol where Self: UIViewController {
     /// 加入房间
@@ -47,7 +31,7 @@ public protocol RCRoomContainerAction where Self: UIViewController {
     /// 关闭滚动功能
     func disableSwitchRoom()
     /// 切换房间
-    func switchRoom(_ room: VoiceRoom)
+    func switchRoom(_ room: RCSceneRoom)
 }
 
 public protocol RCSceneRoomFloatingProtocol {

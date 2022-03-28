@@ -7,23 +7,6 @@
 
 import RCSceneService
 
-public enum PKStatus: Int {
-    case begin = 0
-    case pause
-    case close
-    
-    public var name: String {
-        switch self {
-        case .begin:
-            return "开始"
-        case .pause:
-            return "暂停"
-        case .close:
-            return "结束"
-        }
-    }
-}
-
 public enum HomeItem: Int, CaseIterable {
     case audioRoom = 1
     case audioCall = 11
@@ -62,6 +45,12 @@ public enum HomeItem: Int, CaseIterable {
     }
 }
 
+public enum SceneRoomUserType {
+    case creator
+    case manager
+    case audience
+}
+
 public class SceneRoomManager {
     public static let shared = SceneRoomManager()
     
@@ -70,20 +59,20 @@ public class SceneRoomManager {
     /// 当前场景类型，进入room时，用room.roomType
     public static var scene = HomeItem.audioRoom
     /// 当前所在房间
-    public var currentRoom: VoiceRoom?
+    public var currentRoom: RCSceneRoom?
     /// 管理员
     public var managers = [String]()
     /// 房间背景
-    public var backgroundlist = [String]()
+    public var backgrounds = [String]()
     /// 屏蔽词
-    public var forbiddenWordlist = [String]()
+    public var forbiddenWords = [String]()
     /// 麦位信息
-    public var seatlist = [String]()
+    public var seats = [String]()
     
     public func clear() {
-        seatlist.removeAll()
+        seats.removeAll()
         managers.removeAll()
-        backgroundlist.removeAll()
-        forbiddenWordlist.removeAll()
+        backgrounds.removeAll()
+        forbiddenWords.removeAll()
     }
 }
