@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class RCSceneRoomUsersEmptyView: UIView {
+public class RCSceneRoomUsersEmptyView: UIView {
     private lazy var imageView = UIImageView(image: RCSCAsset.Images.voiceRoomUsersEmptyIcon.image)
     private lazy var titleLabel = UILabel()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(imageView)
@@ -30,7 +30,7 @@ final class RCSceneRoomUsersEmptyView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 16.resize)
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

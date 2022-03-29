@@ -9,7 +9,7 @@ import UIKit
 import SVProgressHUD
 import RCSceneService
 
-class RCSceneRoomUsersViewController: UIViewController {
+public class RCSceneRoomUsersViewController: UIViewController {
     private let room: RCSceneRoom
     private weak var delegate: RCSceneRoomUserOperationProtocol?
     
@@ -43,17 +43,17 @@ class RCSceneRoomUsersViewController: UIViewController {
     }
     private var managers = [String]()
     
-    init(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol) {
+    public init(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol) {
         self.delegate = delegate
         self.room = room
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         title = "用户列表"
         view.addSubview(blurView)
@@ -123,11 +123,11 @@ class RCSceneRoomUsersViewController: UIViewController {
 }
 
 extension RCSceneRoomUsersViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userlist.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: RCSceneRoomUserCell.self)
         cell.updateCell(user: userlist[indexPath.row], hidesInvite: true)
         return cell
@@ -135,7 +135,7 @@ extension RCSceneRoomUsersViewController: UITableViewDataSource {
 }
 
 extension RCSceneRoomUsersViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = userlist[indexPath.row]
         guard user.userId != Environment.currentUserId else {
             return
