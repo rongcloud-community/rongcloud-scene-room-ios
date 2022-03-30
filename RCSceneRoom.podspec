@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneRoom'
-  s.version          = '0.0.2.3'
+  s.version          = '0.0.2.4'
   s.summary          = 'Scene Room'
   s.description      = "Scene Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -21,25 +21,59 @@ Pod::Spec.new do |s|
     'VALID_ARCHS' => 'arm64 x86_64',
   }
   
-  # 4 - source
-  s.source_files = 'RCSceneRoom/Classes/**/*'
+  #  s.default_subspec = 'RCSceneRoomBase'
   
-  # 5 - resource
-  s.resource_bundles = {
-    'RCSceneRoom' => ['RCSceneRoom/Assets/*.xcassets']
-  }
+  s.subspec 'RCSceneFoundation' do |foundation|
+    # 1 - source
+    foundation.source_files = 'RCSceneRoom/RCSceneFoundation/**/*.{h,m,swift}'
+    
+    # 2 - dependency
+    foundation.dependency 'SwiftyBeaver'
+  end
   
-  # 6 - dependency
-  s.dependency 'RCSceneService', '>= 0.0.2'
-  s.dependency 'RCSceneMessage'
-  s.dependency 'RCSceneChatroomKit'
+  s.subspec 'RCSceneMessage' do |message|
+    # 1 - source
+    message.source_files = 'RCSceneRoom/RCSceneMessage/**/*.{h,m,swift}'
+    message.public_header_files = 'RCSceneRoom/RCSceneMessage/**/*.{h}'
+    
+    # 2 - dependency
+    # suggestion version >= 5.1.8
+    message.dependency 'RongCloudIM/IMLib'
+    
+  end
   
-  # recommend version >= 5.1.8
-  s.dependency 'RongCloudIM/IMKit'
+  s.subspec 'RCSceneService' do |service|
+    # 1 - source
+    service.source_files = 'RCSceneRoom/RCSceneService/**/*.{h,m,swift}'
+    
+    # 2 - dependency
+    service.dependency 'Moya'
+    service.dependency 'ReachabilitySwift'
+    service.dependency 'RCSceneRoom/RCSceneFoundation'
+  end
   
-  s.dependency 'SnapKit'
-  s.dependency 'Reusable'
-  s.dependency 'Kingfisher'
-  s.dependency 'SVProgressHUD'
+  s.subspec 'RCSceneRoomBase' do |room|
+    # 1 - source
+    room.source_files = 'RCSceneRoom/RCSceneRoomBase/**/*.{h,m,swift}'
+    
+    # 2 - resource
+    room.resource_bundles = {
+      'RCSceneRoomBase' => ['RCSceneRoom/RCSceneRoomBase/Assets/*.xcassets']
+    }
+    
+    # 3 - dependency
+    room.dependency 'RCSceneRoom/RCSceneMessage'
+    room.dependency 'RCSceneRoom/RCSceneService'
+    room.dependency 'RCSceneRoom/RCSceneFoundation'
+    room.dependency 'RCSceneChatroomKit'
+    
+    # suggestion version >= 5.1.8
+    room.dependency 'RongCloudIM/IMKit'
+    
+    room.dependency 'SnapKit'
+    room.dependency 'Reusable'
+    room.dependency 'Kingfisher'
+    room.dependency 'SVProgressHUD'
+  end
   
 end

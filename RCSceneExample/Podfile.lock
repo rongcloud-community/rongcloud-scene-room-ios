@@ -15,22 +15,28 @@ PODS:
     - Masonry
     - RCCoreKit
     - YYModel
-  - RCSceneFoundation (0.0.2):
+  - RCSceneRoom (0.0.2.3):
+    - RCSceneRoom/RCSceneFoundation (= 0.0.2.3)
+    - RCSceneRoom/RCSceneMessage (= 0.0.2.3)
+    - RCSceneRoom/RCSceneRoomBase (= 0.0.2.3)
+    - RCSceneRoom/RCSceneService (= 0.0.2.3)
+  - RCSceneRoom/RCSceneFoundation (0.0.2.3):
     - SwiftyBeaver
-  - RCSceneMessage (0.0.1):
+  - RCSceneRoom/RCSceneMessage (0.0.2.3):
     - RongCloudIM/IMLib
-  - RCSceneRoom (0.0.2.1):
+  - RCSceneRoom/RCSceneRoomBase (0.0.2.3):
     - Kingfisher
     - RCSceneChatroomKit
-    - RCSceneMessage
-    - RCSceneService (>= 0.0.2)
+    - RCSceneRoom/RCSceneFoundation
+    - RCSceneRoom/RCSceneMessage
+    - RCSceneRoom/RCSceneService
     - Reusable
     - RongCloudIM/IMKit
     - SnapKit
     - SVProgressHUD
-  - RCSceneService (0.0.2):
+  - RCSceneRoom/RCSceneService (0.0.2.3):
     - Moya
-    - RCSceneFoundation (>= 0.0.2)
+    - RCSceneRoom/RCSceneFoundation
     - ReachabilitySwift
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
@@ -76,9 +82,6 @@ SPEC REPOS:
     - Moya
     - RCCoreKit
     - RCSceneChatroomKit
-    - RCSceneFoundation
-    - RCSceneMessage
-    - RCSceneService
     - ReachabilitySwift
     - Reusable
     - RongCloudIM
@@ -100,10 +103,7 @@ SPEC CHECKSUMS:
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   RCCoreKit: 3f143441ac62880b454cca9066f526a27c45d4ce
   RCSceneChatroomKit: 5fa306001c88bc075365a3ed8a76776e151670f2
-  RCSceneFoundation: 6d91dda21fe9cc4aab6718dd6940a7e29e028955
-  RCSceneMessage: 926880788dcb19bf49c9631e82e1e8abc2957397
-  RCSceneRoom: 0cac09fd129b5e58ea0c63924dd5001b4863e27a
-  RCSceneService: 8810bb3c043162e0eca81a13bddb95e0fb01ca03
+  RCSceneRoom: 0555aa533e46fdd3220a79414942df85006f9b93
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: 1ebe6a394cf5289825c2ee62a63068bdc34856f4
