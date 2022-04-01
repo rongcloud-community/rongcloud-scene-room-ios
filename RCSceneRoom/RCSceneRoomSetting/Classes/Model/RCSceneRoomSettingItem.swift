@@ -60,29 +60,29 @@ extension Item {
     var image: UIImage? {
         switch self {
         case let .roomLock(lock):
-            return lock ? UIImage(assetName: "room_lock_on") : UIImage(assetName: "room_lock_off")
+            return lock ? UIImage(roomSetting: "room_lock_on") : UIImage(roomSetting: "room_lock_off")
         case let .seatMute(mute):
-            return mute ? UIImage(assetName: "seat_mute_on") : UIImage(assetName: "seat_mute_off")
+            return mute ? UIImage(roomSetting: "seat_mute_on") : UIImage(roomSetting: "seat_mute_off")
         case let .seatLock(lock):
-            return lock ? UIImage(assetName: "seat_lock_on") : UIImage(assetName: "seat_lock_off")
+            return lock ? UIImage(roomSetting: "seat_lock_on") : UIImage(roomSetting: "seat_lock_off")
         case let .speaker(enable):
-            return enable ? UIImage(assetName: "speaker_mute_on") : UIImage(assetName: "speaker_mute_off")
+            return enable ? UIImage(roomSetting: "speaker_mute_on") : UIImage(roomSetting: "speaker_mute_off")
         case let .seatFree(free):
-            return free ? UIImage(assetName: "seat_mode_request") : UIImage(assetName: "seat_mode_free")
-        case .roomName: return UIImage(assetName: "room_title")
-        case .roomBackground: return UIImage(assetName: "room_background")
+            return free ? UIImage(roomSetting: "seat_mode_request") : UIImage(roomSetting: "seat_mode_free")
+        case .roomName: return UIImage(roomSetting: "room_title")
+        case .roomBackground: return UIImage(roomSetting: "room_background")
         case let .seatCount(count):
-            return count == 4 ? UIImage(assetName: "seat_count_4") : UIImage(assetName: "seat_count_8")
-        case .music: return UIImage(assetName: "room_music")
-        case .cameraSetting: return UIImage(assetName: "camera_settings")
-        case .forbidden: return UIImage(assetName: "room_forbidden")
-        case .roomSuspend: return UIImage(assetName: "room_suspend")
-        case .roomNotice: return UIImage(assetName: "room_notice")
-        case .cameraSwitch: return UIImage(assetName: "camera_switch")
-        case .beautyRetouch: return UIImage(assetName: "beauty_retouch")
-        case .beautySticker: return UIImage(assetName: "beauty_sticker")
-        case .beautyMakeup: return UIImage(assetName: "beauty_makeup")
-        case .beautyEffect: return UIImage(assetName: "beauty_effect")
+            return count == 4 ? UIImage(roomSetting: "seat_count_4") : UIImage(roomSetting: "seat_count_8")
+        case .music: return UIImage(roomSetting: "room_music")
+        case .cameraSetting: return UIImage(roomSetting: "camera_settings")
+        case .forbidden: return UIImage(roomSetting: "room_forbidden")
+        case .roomSuspend: return UIImage(roomSetting: "room_suspend")
+        case .roomNotice: return UIImage(roomSetting: "room_notice")
+        case .cameraSwitch: return UIImage(roomSetting: "camera_switch")
+        case .beautyRetouch: return UIImage(roomSetting: "beauty_retouch")
+        case .beautySticker: return UIImage(roomSetting: "beauty_sticker")
+        case .beautyMakeup: return UIImage(roomSetting: "beauty_makeup")
+        case .beautyEffect: return UIImage(roomSetting: "beauty_effect")
         }
     }
 }

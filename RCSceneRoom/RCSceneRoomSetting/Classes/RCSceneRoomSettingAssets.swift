@@ -11,7 +11,7 @@ class RCSceneRoomSettingBundle: Bundle {
     static var image: Bundle? {
         let libURL = Bundle(for: RCSceneRoomSettingBundle.self).bundleURL
         let imageURL = libURL.appendingPathComponent("RCSceneRoomSetting.bundle")
-        return RCSceneBundle(url: imageURL)
+        return RCSceneRoomSettingBundle(url: imageURL)
     }
 }
 

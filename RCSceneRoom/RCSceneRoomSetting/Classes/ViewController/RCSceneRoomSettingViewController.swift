@@ -39,7 +39,7 @@ public class RCSceneRoomSettingViewController: UIViewController {
     private lazy var arrowImageView: UIImageView = {
         let instance = UIImageView()
         instance.contentMode = .scaleAspectFit
-        instance.image = UIImage(assetName: "fold")
+        instance.image = UIImage(roomSetting: "fold")
         return instance
     }()
     private let items: [Item]
