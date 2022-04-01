@@ -52,6 +52,55 @@ Pod::Spec.new do |s|
     service.dependency 'RCSceneRoom/RCSceneFoundation'
   end
   
+  s.subspec 'RCSceneGift' do |gift|
+    # 1 - source
+    gift.source_files = 'RCSceneRoom/RCSceneGift/Classes/**/*'
+    
+    # 2 - resource
+    gift.resource_bundles = {
+      'RCSceneGift' => ['RCSceneRoom/RCSceneGift/Assets/*.xcassets']
+    }
+    
+    # 3 - dependency
+    gift.dependency 'RCSceneRoom/RCSceneMessage'
+    gift.dependency 'RCSceneRoom/RCSceneService'
+    
+    gift.dependency 'SnapKit'
+    gift.dependency 'Reusable'
+    gift.dependency 'Kingfisher'
+    gift.dependency 'SVProgressHUD'
+  end
+  
+  s.subspec 'RCSceneMusic' do |music|
+    # 1 - source
+    music.source_files = 'RCSceneRoom/RCSceneMusic/**/*'
+    
+    # 2 - resource
+    # 3 - dependency
+    music.dependency 'RCSceneRoom/RCSceneMessage'
+    music.dependency 'RCSceneRoom/RCSceneService'
+    
+    music.dependency 'SVProgressHUD'
+    music.dependency 'RCMusicControlKit'
+    music.dependency 'RongCloudRTC/RongRTCLib'
+  end
+  
+  s.subspec 'RCSceneRoomSetting' do |setting|
+    # 1 - source
+    setting.source_files = 'RCSceneRoom/RCSceneRoomSetting/Classes/**/*'
+    
+    # 2 - resource
+    setting.resource_bundles = {
+      'RCSceneRoomSetting' => ['RCSceneRoom/RCSceneRoomSetting/Assets/*.xcassets']
+    }
+    
+    # 3 - dependency
+    setting.dependency 'RCSceneRoom/RCSceneService'
+    
+    setting.dependency 'SnapKit'
+    setting.dependency 'Reusable'
+  end
+  
   s.subspec 'RCSceneRoomBase' do |room|
     # 1 - source
     room.source_files = 'RCSceneRoom/RCSceneRoomBase/**/*.{h,m,swift}'
