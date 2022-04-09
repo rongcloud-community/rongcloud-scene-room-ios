@@ -1,0 +1,19 @@
+//
+//  VoiceRoomForbiddenWord.swift
+//  RCE
+//
+//  Created by 叶孤城 on 2021/8/3.
+//
+
+import Foundation
+
+public struct RCSceneRoomForbiddenWord: Codable, Identifiable {
+    public let id: Int
+    public let name: String
+    public let createDt: TimeInterval
+    public init(id: Int, name: String, createDt: TimeInterval) {
+        self.id = id
+        self.name = name
+        self.createDt = createDt
+    }
+}

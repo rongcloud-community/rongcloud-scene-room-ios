@@ -11,26 +11,49 @@ PODS:
     - FCFileManager
     - SSZipArchive
     - YYModel
+  - RCMusicControlKit (0.0.2.2):
+    - Masonry
+    - RCCoreKit
+    - SDWebImage
+    - YYModel
   - RCSceneChatroomKit (0.0.3.1):
     - Masonry
     - RCCoreKit
     - YYModel
-  - RCSceneFoundation (0.0.2):
+  - RCSceneRoom/RCSceneFoundation (0.0.2.4):
     - SwiftyBeaver
-  - RCSceneMessage (0.0.1):
+  - RCSceneRoom/RCSceneGift (0.0.2.4):
+    - Kingfisher
+    - RCSceneRoom/RCSceneMessage
+    - RCSceneRoom/RCSceneService
+    - Reusable
+    - SnapKit
+    - SVProgressHUD
+  - RCSceneRoom/RCSceneMessage (0.0.2.4):
     - RongCloudIM/IMLib
-  - RCSceneRoom (0.0.2.1):
+  - RCSceneRoom/RCSceneMusic (0.0.2.4):
+    - RCMusicControlKit
+    - RCSceneRoom/RCSceneMessage
+    - RCSceneRoom/RCSceneService
+    - RongCloudRTC/RongRTCLib
+    - SVProgressHUD
+  - RCSceneRoom/RCSceneRoom (0.0.2.4):
     - Kingfisher
     - RCSceneChatroomKit
-    - RCSceneMessage
-    - RCSceneService (>= 0.0.2)
+    - RCSceneRoom/RCSceneFoundation
+    - RCSceneRoom/RCSceneMessage
+    - RCSceneRoom/RCSceneService
     - Reusable
     - RongCloudIM/IMKit
     - SnapKit
     - SVProgressHUD
-  - RCSceneService (0.0.2):
+  - RCSceneRoom/RCSceneRoomSetting (0.0.2.4):
+    - RCSceneRoom/RCSceneService
+    - Reusable
+    - SnapKit
+  - RCSceneRoom/RCSceneService (0.0.2.4):
     - Moya
-    - RCSceneFoundation (>= 0.0.2)
+    - RCSceneRoom/RCSceneFoundation
     - ReachabilitySwift
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
@@ -58,6 +81,11 @@ PODS:
     - RongCloudIM/IMLibCore
   - RongCloudIM/PublicService (5.2.1):
     - RongCloudIM/IMLibCore
+  - RongCloudRTC/RongRTCLib (5.2.1):
+    - RongCloudIM/IMLibCore (>= 5.1.3)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - SnapKit (5.0.1)
   - SSZipArchive (2.4.3)
   - SVProgressHUD (2.2.5)
@@ -65,7 +93,10 @@ PODS:
   - YYModel (1.0.4)
 
 DEPENDENCIES:
-  - RCSceneRoom (from `../`)
+  - RCSceneRoom/RCSceneGift (from `../`)
+  - RCSceneRoom/RCSceneMusic (from `../`)
+  - RCSceneRoom/RCSceneRoom (from `../`)
+  - RCSceneRoom/RCSceneRoomSetting (from `../`)
 
 SPEC REPOS:
   trunk:
@@ -75,13 +106,13 @@ SPEC REPOS:
     - Masonry
     - Moya
     - RCCoreKit
+    - RCMusicControlKit
     - RCSceneChatroomKit
-    - RCSceneFoundation
-    - RCSceneMessage
-    - RCSceneService
     - ReachabilitySwift
     - Reusable
     - RongCloudIM
+    - RongCloudRTC
+    - SDWebImage
     - SnapKit
     - SSZipArchive
     - SVProgressHUD
@@ -99,20 +130,20 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   RCCoreKit: 3f143441ac62880b454cca9066f526a27c45d4ce
+  RCMusicControlKit: f6eb6d366be36e14ab8869de970d2acb03bc23f7
   RCSceneChatroomKit: 5fa306001c88bc075365a3ed8a76776e151670f2
-  RCSceneFoundation: 6d91dda21fe9cc4aab6718dd6940a7e29e028955
-  RCSceneMessage: 926880788dcb19bf49c9631e82e1e8abc2957397
-  RCSceneRoom: 0cac09fd129b5e58ea0c63924dd5001b4863e27a
-  RCSceneService: 8810bb3c043162e0eca81a13bddb95e0fb01ca03
+  RCSceneRoom: d68dda0901d5436aceb21258b42b549e0ac28db3
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: 1ebe6a394cf5289825c2ee62a63068bdc34856f4
+  RongCloudRTC: 0bda17440186a6174fe5871ba30030466cc19c3a
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 2d9bd7b5a9d44bcb89f1d54f3d11a6f9d3faf308
+PODFILE CHECKSUM: 7012af0efeb529c25aaaf5bd71966fa9eecc6647
 
 COCOAPODS: 1.11.3
