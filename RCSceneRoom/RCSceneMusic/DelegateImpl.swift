@@ -57,7 +57,7 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
                                                    url: url,
                                                    backgroundUrl: music.coverUrl ?? "",
                                                    thirdMusicId: musicId,
-                                                   size: fileSize) { result in
+                                                   size: fileSize / 1024) { result in
                                 switch result.map(RCSceneResponse.self) {
                                 case .success:
                                     completion(true)

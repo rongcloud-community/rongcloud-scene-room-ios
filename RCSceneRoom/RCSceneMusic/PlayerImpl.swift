@@ -5,21 +5,54 @@
 //  Created by xuefeng on 2021/11/28.
 //
 
-import UIKit
-
-let RCVoiceSyncMusicInfoKey = "RCVoiceSyncMusicInfoKey"
+import RongRTCLib
+import SVProgressHUD
+import RCMusicControlKit
 
 public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelegate {
+    
+    public enum PlayerRoomType {
+        case voice
+        case radio
+        case live
+    }
     
     public static let instance = PlayerImpl()
     
     //用户耳返开关状态
     private var openEarMonitoring = false
 
+    public var type: PlayerRoomType = .voice
+    
     //当前正在播放的音乐
     public var currentPlayingMusic: RCMusicInfo?
     //当前的播放器状态
     public var currentPlayState: RCRTCAudioMixingState = .mixingStateStop
+    
+    //语聊房静音需要同步暂停音乐
+    
+    var needResumePlayer = false
+    
+    public var isSilence: Bool = false {
+        willSet {
+            if (newValue) {
+                if (currentPlayState == .mixingStatePlaying) {
+                    self.pause()
+                    needResumePlayer = true
+                }
+            }
+        }
+        
+        didSet {
+            if (!isSilence) {
+                if (needResumePlayer) {
+                    self.resume()
+                    needResumePlayer = false
+                }
+            }
+        }
+    }
+    
     //被暂停的音乐
     var currentPausingMusic: RCMusicInfo?
     
@@ -31,8 +64,7 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
                          selector: #selector(onRouteChanged(_:)),
                          name: AVAudioSession.routeChangeNotification,
                          object: nil)
-        
-        RCCoreClient.shared().add(self)
+
     }
     
     public func initializedEarMonitoring() {
@@ -73,6 +105,11 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     
     public func startMixing(with info: RCMusicInfo) -> Bool {
         
+        if (isSilence) {
+            SVProgressHUD.showError(withStatus: "当前为静音模式不允许播放音乐")
+            return false
+        }
+        
         if let pausingMusic = currentPausingMusic,
             currentPlayState == .mixingStatePause,
             pausingMusic.musicId == info.musicId {
@@ -111,11 +148,17 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         return RCRTCAudioMixer.sharedInstance().stop()
     }
     
+    @discardableResult
     func pause() -> Bool {
         return RCRTCAudioMixer.sharedInstance().pause()
     }
     
+    @discardableResult
     func resume() -> Bool {
+        if (isSilence) {
+            SVProgressHUD.showError(withStatus: "当前为静音模式不允许播放音乐")
+            return false
+        }
         return RCRTCAudioMixer.sharedInstance().resume()
     }
     
@@ -140,7 +183,6 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         }
         
         RCMusicEngine.shareInstance().asyncMixingState(RCMusicMixingState(rawValue: UInt(mixingState.rawValue)) ?? .playing)
-
     }
     
     public func didReportPlayingProgress(_ progress: Float) {
@@ -152,6 +194,8 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
             handleStopState()
         } else if (mixingState == .mixingStatePause) {
             handlePauseState()
+        } else {
+            handlePlayState()
         }
     }
     
@@ -172,20 +216,45 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         currentPlayingMusic = nil
     }
     
+    func handlePlayState() {
+        if (needResumePlayer) {
+            if let currentPausingMusic = currentPausingMusic {
+                currentPlayingMusic = currentPausingMusic
+            }
+            currentPausingMusic = nil
+        }
+    }
+    
     func sendCommandMessage() {
         //发送控制消息 同步歌曲信息到观众房间
         var musicId = 0
         if  let musicInfo = currentPlayingMusic as? MusicInfo, let id = musicInfo.id {
             musicId = id
         }
-        guard let commandMessage = RCCommandMessage(name: RCVoiceSyncMusicInfoKey, data: String(musicId)) else {
+        guard let commandMessage = RCCommandMessage(name: "RCVoiceSyncMusicInfoKey", data: String(musicId)) else {
             return
         }
-        let roomId = RCRTCEngine.sharedInstance().room.roomId
-        RCCoreClient.shared().sendMessage(.ConversationType_CHATROOM, targetId: roomId, content: commandMessage, pushContent: "", pushData: "") { mId in
-            print(" voice 同步歌曲信息消息发送成功");
-        } error: { code, mId in
-            print(" voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)");
+        if (PlayerImpl.instance.type == .voice) {
+            let roomId = RCRTCEngine.sharedInstance().room.roomId
+            RCCoreClient.shared().sendMessage(.ConversationType_CHATROOM, targetId: roomId, content: commandMessage, pushContent: "", pushData: "") { mId in
+                print(" voice 同步歌曲信息消息发送成功");
+            } error: { code, mId in
+                print(" voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)");
+            }
+        } else if (PlayerImpl.instance.type == .radio || PlayerImpl.instance.type == .live) {
+            guard let roomId = DelegateImpl.instance.roomId else {
+                return
+            }
+
+            ChatroomSendMessage(commandMessage, roomId) { result in
+                switch result {
+                case .success:
+                    print("radio 同步歌曲信息消息发送成功");
+                case .failure(let error):
+                    print(" radio 同步歌曲信息消息发送失败: \(error.localizedDescription)");
+                }
+            }
+    
         }
     }
     
@@ -198,6 +267,8 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         let tmp = currentPlayingMusic
         currentPlayingMusic = nil
         currentPausingMusic = nil
+        isSilence = false
+        needResumePlayer = false
         if (tmp != nil) {
             let _ = stopMixing(with: nil)
         }
@@ -222,42 +293,4 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         setEarOpenMonitoring(openEarMonitoring)
     }
 
-}
-
-import RCMusicControlKit
-
-extension PlayerImpl: RCIMClientReceiveMessageDelegate {
-    public func onReceived(_ message: RCMessage!, left nLeft: Int32, object: Any!) {
-        guard let content = message.content as? RCCommandMessage else { return }
-        guard content.name == RCVoiceSyncMusicInfoKey else { return }
-        guard let data = content.data else { return }
-        DispatchQueue.main.async {
-            guard let bubbleView = RCMusicEngine.musicInfoBubbleView else { return }
-            self.handleMusicCommand(Int(data) ?? 0, view: bubbleView)
-        }
-        
-    }
-    
-    private func handleMusicCommand(_ code: Int, view: RCMusicInfoBubbleView) {
-        if code == 0 {
-            return view.info = nil
-        }
-        
-        DataSourceImpl.instance.fetchCollectMusics { infos in
-            guard let infos = infos else {
-                return view.info = nil
-            }
-            var result: MusicInfo?
-            for info in infos {
-                guard let info = info as? MusicInfo else {
-                    continue
-                }
-                if (info.id == code) {
-                    result = info
-                    break
-                }
-            }
-            view.info = result
-        }
-    }
 }
