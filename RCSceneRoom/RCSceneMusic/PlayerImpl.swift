@@ -22,8 +22,6 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     //用户耳返开关状态
     private var openEarMonitoring = false
 
-    public var type: PlayerRoomType = .voice
-    
     //当前正在播放的音乐
     public var currentPlayingMusic: RCMusicInfo?
     //当前的播放器状态
@@ -234,27 +232,11 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         guard let commandMessage = RCCommandMessage(name: "RCVoiceSyncMusicInfoKey", data: String(musicId)) else {
             return
         }
-        if (PlayerImpl.instance.type == .voice) {
-            let roomId = RCRTCEngine.sharedInstance().room.roomId
-            RCCoreClient.shared().sendMessage(.ConversationType_CHATROOM, targetId: roomId, content: commandMessage, pushContent: "", pushData: "") { mId in
-                print(" voice 同步歌曲信息消息发送成功");
-            } error: { code, mId in
-                print(" voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)");
-            }
-        } else if (PlayerImpl.instance.type == .radio || PlayerImpl.instance.type == .live) {
-            guard let roomId = DelegateImpl.instance.roomId else {
-                return
-            }
-
-            ChatroomSendMessage(commandMessage, roomId) { result in
-                switch result {
-                case .success:
-                    print("radio 同步歌曲信息消息发送成功");
-                case .failure(let error):
-                    print(" radio 同步歌曲信息消息发送失败: \(error.localizedDescription)");
-                }
-            }
-    
+        let roomId = RCRTCEngine.sharedInstance().room.roomId
+        RCCoreClient.shared().sendMessage(.ConversationType_CHATROOM, targetId: roomId, content: commandMessage, pushContent: "", pushData: "") { mId in
+            print(" voice 同步歌曲信息消息发送成功");
+        } error: { code, mId in
+            print(" voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)");
         }
     }
     
