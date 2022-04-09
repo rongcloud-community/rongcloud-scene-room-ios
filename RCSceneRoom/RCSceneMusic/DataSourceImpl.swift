@@ -202,11 +202,15 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
     }
     
     public func dataSourceInitialized() {
-        HFOpenApiManager.shared().registerApp(withAppId: "6f78321c38ee4db3bb4dae7e56d464b1", serverCode: "ca41ad68e8054610a2", clientId: Environment.currentUserId, version: "V4.1.2") { _ in
-            print("register hifive success")
-        } fail: { _ in
-            fatalError("register hifive failed")
-        }
+        HFOpenApiManager.shared()
+            .registerApp(withAppId: Environment.hiFiveAppId,
+                         serverCode: Environment.hiFiveServerCode,
+                         clientId: Environment.currentUserId,
+                         version: Environment.hiFiveServerVersion) { _ in
+                print("register hifive success")
+            } fail: { _ in
+                fatalError("register hifive failed")
+            }
     }
     
     public func fetchCategories(_ completion: @escaping ([Any]?) -> Void) {
