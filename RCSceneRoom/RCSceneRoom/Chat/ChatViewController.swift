@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RongIMKit
 import SVProgressHUD
 
 public class ChatViewController: RCConversationViewController {

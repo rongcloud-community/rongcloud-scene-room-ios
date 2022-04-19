@@ -16,4 +16,5 @@ FOUNDATION_EXPORT const unsigned char RCSceneRoomVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <RCSceneRoom/PublicHeader.h>
 
 #import <RongIMLibCore/RongIMLibCore.h>
+#import <RongCloudOpenSource/RongIMKit.h>
 #import <RCSceneChatroomKit/RCSceneChatroomKit.h>

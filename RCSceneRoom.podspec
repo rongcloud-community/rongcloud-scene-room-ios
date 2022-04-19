@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneRoom'
-  s.version          = '0.0.2.6'
+  s.version          = '0.0.2.7'
   s.summary          = 'Scene Room'
   s.description      = "Scene Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -129,7 +129,7 @@ Pod::Spec.new do |s|
     room.dependency 'RCSceneChatroomKit'
     
     # suggestion version >= 5.1.8
-    room.dependency 'RongCloudIM/IMKit'
+    room.dependency 'RongCloudOpenSource/IMKit'
     
     room.dependency 'SnapKit'
     room.dependency 'Reusable'
