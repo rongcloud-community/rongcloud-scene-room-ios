@@ -29,7 +29,6 @@ struct BubbleMusicInfo: Codable {
     let backgroundUrl: String
 }
 
-
 public class MusicInfo: NSObject,RCMusicInfo {
 
     override init() {}

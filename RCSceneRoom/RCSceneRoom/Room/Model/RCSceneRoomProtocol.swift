@@ -3,9 +3,9 @@ import Foundation
 
 public protocol RCRoomCycleProtocol where Self: UIViewController {
     /// 加入房间
-    func joinRoom(_ completion: @escaping (Result<Void, ReactorError>) -> Void)
+    func joinRoom(_ completion: @escaping (Result<Void, RCSceneError>) -> Void)
     /// 离开房间
-    func leaveRoom(_ completion: @escaping (Result<Void, ReactorError>) -> Void)
+    func leaveRoom(_ completion: @escaping (Result<Void, RCSceneError>) -> Void)
     
     /// 禁用滚动事件的视图
     func descendantViews() -> [UIView]
@@ -18,8 +18,8 @@ public protocol RCRoomCycleProtocol where Self: UIViewController {
 }
 
 extension RCRoomCycleProtocol {
-    public func joinRoom(_ completion: @escaping (Result<Void, ReactorError>) -> Void) {}
-    public func leaveRoom(_ completion: @escaping (Result<Void, ReactorError>) -> Void) {}
+    public func joinRoom(_ completion: @escaping (Result<Void, RCSceneError>) -> Void) {}
+    public func leaveRoom(_ completion: @escaping (Result<Void, RCSceneError>) -> Void) {}
     public func descendantViews() -> [UIView] { [] }
     public func setRoomContainerAction(action: RCRoomContainerAction) {}
     public func setRoomFloatingAction(action: RCSceneRoomFloatingProtocol) {}

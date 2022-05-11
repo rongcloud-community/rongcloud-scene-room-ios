@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneRoom'
-  s.version          = '0.0.2.8'
+  s.version          = '0.0.3'
   s.summary          = 'Scene Room'
   s.description      = "Scene Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -109,6 +109,15 @@ Pod::Spec.new do |s|
     
     setting.dependency 'SnapKit'
     setting.dependency 'Reusable'
+  end
+  
+  s.subspec 'RCSceneAnalytics' do |analytics|
+    # 1 - source
+    analytics.source_files = 'RCSceneRoom/RCSceneAnalytics/Classes/**/*'
+    
+    # 2 - dependency
+    analytics.dependency 'RCSceneRoom/RCSceneService'
+    analytics.dependency 'SensorsAnalyticsSDK'
   end
   
   s.subspec 'RCSceneRoom' do |room|
