@@ -116,7 +116,7 @@ Pod::Spec.new do |s|
     analytics.source_files = 'RCSceneRoom/RCSceneAnalytics/Classes/**/*'
     
     # 2 - dependency
-    analytics.dependency 'RCSceneRoom/RCSceneService'
+    analytics.dependency 'RCSceneRoom/RCSceneRoomSetting'
     analytics.dependency 'SensorsAnalyticsSDK'
   end
   

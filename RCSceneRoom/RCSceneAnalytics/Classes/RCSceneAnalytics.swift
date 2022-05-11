@@ -110,8 +110,8 @@ public extension RCSensorAction {
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "is_private": room.isPrivate,
-                "is_speaker_on": false,
-                "is_camera_on": false,
+                "is_speaker_on": mic,
+                "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
             RCSensor.shared.track("joinRoom", withProperties: ps)
@@ -120,8 +120,8 @@ public extension RCSensorAction {
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "is_private": room.isPrivate,
-                "is_speaker_on": false,
-                "is_camera_on": false,
+                "is_speaker_on": mic,
+                "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
             RCSensor.shared.track("quitRoom", withProperties: ps)
@@ -130,8 +130,8 @@ public extension RCSensorAction {
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "is_private": room.isPrivate,
-                "is_speaker_on": false,
-                "is_camera_on": false,
+                "is_speaker_on": mic,
+                "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
             RCSensor.shared.track("createRoom", withProperties: ps)
@@ -140,8 +140,8 @@ public extension RCSensorAction {
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "is_private": room.isPrivate,
-                "is_speaker_on": false,
-                "is_camera_on": false,
+                "is_speaker_on": mic,
+                "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
             RCSensor.shared.track("closeRoom", withProperties: ps)
