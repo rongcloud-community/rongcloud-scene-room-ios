@@ -90,7 +90,7 @@ public class RCSceneRoomUsersViewController: UIViewController {
     
     private func fetchRoomUserlist() {
         userService.roomUsers(roomId: room.roomId) { [weak self] result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 if let users = wrapper.data {
                     self?.userlist = users
@@ -104,7 +104,7 @@ public class RCSceneRoomUsersViewController: UIViewController {
     
     private func fetchmanagers() {
         userService.roomManagers(roomId: room.roomId) { [weak self] result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 if let users = wrapper.data {
                     self?.managers = users.map(\.userId)
