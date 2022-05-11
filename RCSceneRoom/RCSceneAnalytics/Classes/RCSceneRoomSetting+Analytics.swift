@@ -10,29 +10,29 @@ import Foundation
 extension Item {
     var functionId: Int {
         switch self {
-        case .roomLock(let bool):
+        case .roomLock:
             return 1
-        case .roomSuspend(let bool):
+        case .roomSuspend:
             return 2
-        case .roomName(let string):
+        case .roomName:
             return 3
-        case .roomNotice(let string):
+        case .roomNotice:
             return 4
         case .roomBackground:
             return 5
         case .music:
             return 6
-        case .forbidden(let array):
+        case .forbidden:
             return 7
-        case .seatMute(let bool):
+        case .seatMute:
             return 8
-        case .seatLock(let bool):
+        case .seatLock:
             return 9
-        case .seatFree(let bool):
+        case .seatFree:
             return 10
-        case .seatCount(let int):
+        case .seatCount:
             return 11
-        case .speaker(let enable):
+        case .speaker:
             return 12
         case .cameraSetting:
             return 13

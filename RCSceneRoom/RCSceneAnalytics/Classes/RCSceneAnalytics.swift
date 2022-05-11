@@ -12,7 +12,11 @@ public class RCSensor {
     public static let shared = SensorsAnalyticsSDK.sharedInstance()!
     
     public static func start(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        let options = SAConfigOptions(serverURL: Environment.sensorURLString,
+        let urlString = Environment.sensorURLString
+        guard urlString.count > 0 else {
+            fatalError("sensor url is invalid")
+        }
+        let options = SAConfigOptions(serverURL: urlString,
                                       launchOptions: launchOptions)
         options.autoTrackEventType = [
             .eventTypeAppStart,

@@ -10,6 +10,7 @@ target 'RCSceneExample' do
   pod 'RCSceneRoom/RCSceneRoom', :path => '../'
   pod 'RCSceneRoom/RCSceneGift', :path => '../'
   pod 'RCSceneRoom/RCSceneMusic', :path => '../'
+  pod 'RCSceneRoom/RCSceneAnalytics', :path => '../'
   pod 'RCSceneRoom/RCSceneRoomSetting', :path => '../'
   
 end

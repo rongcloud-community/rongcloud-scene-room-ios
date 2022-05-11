@@ -18,6 +18,8 @@ public struct Environment {
     
     public static var buglyKey: String = ""
     
+    public static var sensorURLString: String = ""
+    
     public static var MHBeautyKey: String = ""
  
     /// 请申请您的 BusinessToken：https://rcrtc-api.rongcloud.net/code
