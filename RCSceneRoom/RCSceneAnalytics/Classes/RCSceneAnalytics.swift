@@ -9,7 +9,7 @@ import SensorsAnalyticsSDK
 
 public class RCSensor {
     
-    public static let shared = SensorsAnalyticsSDK.sharedInstance()
+    public static var shared: SensorsAnalyticsSDK?
     
     public static func start(_ serverURL: String,
                              launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
@@ -40,6 +40,8 @@ public class RCSensor {
         })
         
         SensorsAnalyticsSDK.sharedInstance()?.trackAppInstall()
+        
+        shared = SensorsAnalyticsSDK.sharedInstance()
     }
 }
 
