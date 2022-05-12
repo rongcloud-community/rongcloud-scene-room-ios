@@ -9,14 +9,11 @@ import SensorsAnalyticsSDK
 
 public class RCSensor {
     
-    public static let shared = SensorsAnalyticsSDK.sharedInstance()!
+    public static let shared = SensorsAnalyticsSDK.sharedInstance()
     
-    public static func start(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        let urlString = Environment.sensorURLString
-        guard urlString.count > 0 else {
-            fatalError("sensor url is invalid")
-        }
-        let options = SAConfigOptions(serverURL: urlString,
+    public static func start(_ serverURL: String,
+                             launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        let options = SAConfigOptions(serverURL: serverURL,
                                       launchOptions: launchOptions)
         options.autoTrackEventType = [
             .eventTypeAppStart,
@@ -69,7 +66,7 @@ public extension RCSensorAction {
     func trigger() {
         switch self {
         case .codeClick:
-            RCSensor.shared.track("getCodeClick", withProperties: ["service_type": "登录"])
+            RCSensor.shared?.track("getCodeClick", withProperties: ["service_type": "登录"])
         case let .code(result):
             var properties: [String: Any] = [
                 "service_type": "登录"
@@ -81,9 +78,9 @@ public extension RCSensorAction {
                 properties["is_success"] = false
                 properties["fail_reason"] = error.localizedDescription
             }
-            RCSensor.shared.track("getCodeResult", withProperties: properties)
+            RCSensor.shared?.track("getCodeResult", withProperties: properties)
         case .loginClick:
-            RCSensor.shared.track("loginButtonClick", withProperties: [
+            RCSensor.shared?.track("loginButtonClick", withProperties: [
                 "current_page": "demo登录页",
                 "login_method": "验证码登录"
             ])
@@ -101,8 +98,8 @@ public extension RCSensorAction {
                 properties["fail_reason"] = error.localizedDescription
             }
             UserDefaults.standard.set(true, forKey: "is_first_time_occur")
-            RCSensor.shared.track("getLogin", withProperties: properties)
-            RCSensor.shared.registerDynamicSuperProperties {
+            RCSensor.shared?.track("getLogin", withProperties: properties)
+            RCSensor.shared?.registerDynamicSuperProperties {
                 ["isLogin": true]
             }
         case let .joinRoom(room, mic, camera):
@@ -114,7 +111,7 @@ public extension RCSensorAction {
                 "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("joinRoom", withProperties: ps)
+            RCSensor.shared?.track("joinRoom", withProperties: ps)
         case let .quitRoom(room, mic, camera):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
@@ -124,7 +121,7 @@ public extension RCSensorAction {
                 "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("quitRoom", withProperties: ps)
+            RCSensor.shared?.track("quitRoom", withProperties: ps)
         case let .createRoom(room, mic, camera):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
@@ -134,7 +131,7 @@ public extension RCSensorAction {
                 "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("createRoom", withProperties: ps)
+            RCSensor.shared?.track("createRoom", withProperties: ps)
         case let .closeRoom(room, mic, camera):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
@@ -144,42 +141,42 @@ public extension RCSensorAction {
                 "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("closeRoom", withProperties: ps)
+            RCSensor.shared?.track("closeRoom", withProperties: ps)
         case let .connectRequest(room):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("connectRequest", withProperties: ps)
+            RCSensor.shared?.track("connectRequest", withProperties: ps)
         case let .connectionWithDraw(room):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("connectionWithDraw", withProperties: ps)
+            RCSensor.shared?.track("connectionWithDraw", withProperties: ps)
         case let .PKClick(room):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("pkClick", withProperties: ps)
+            RCSensor.shared?.track("pkClick", withProperties: ps)
         case let .textClick(room):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("textClick", withProperties: ps)
+            RCSensor.shared?.track("textClick", withProperties: ps)
         case let .giftClick(room):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
                 "room_name": room.roomName,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("giftClick", withProperties: ps)
+            RCSensor.shared?.track("giftClick", withProperties: ps)
         case let .settingClick(room, item):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
@@ -188,17 +185,17 @@ public extension RCSensorAction {
                 "setting_function_id": "\(item.functionId)",
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared.track("settingClick", withProperties: ps)
+            RCSensor.shared?.track("settingClick", withProperties: ps)
         case let .dialClick(type):
             let ps: [String: Any] = [
                 "scenes": type == 1 ? "视频通话" : "音频通话"
             ]
-            RCSensor.shared.track("dailClick", withProperties: ps)
+            RCSensor.shared?.track("dailClick", withProperties: ps)
         case let .functionModuleView(name):
             let ps: [String: Any] = [
                 "module_name": name,
             ]
-            RCSensor.shared.track("functionModuleView", withProperties: ps)
+            RCSensor.shared?.track("functionModuleView", withProperties: ps)
         }
     }
 }
