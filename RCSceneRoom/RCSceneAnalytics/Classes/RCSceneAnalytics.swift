@@ -102,7 +102,7 @@ public extension RCSensorAction {
             UserDefaults.standard.set(true, forKey: "is_first_time_occur")
             RCSensor.shared?.track("getLogin", withProperties: properties)
             RCSensor.shared?.registerDynamicSuperProperties {
-                ["isLogin": true]
+                ["is_login": true]
             }
         case let .joinRoom(room, mic, camera):
             let ps: [String: Any] = [
@@ -133,7 +133,7 @@ public extension RCSensorAction {
                 "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared?.track("createRoom", withProperties: ps)
+            RCSensor.shared?.track("creatRoom", withProperties: ps)
         case let .closeRoom(room, mic, camera):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
@@ -157,7 +157,7 @@ public extension RCSensorAction {
                 "room_name": room.roomName,
                 "scenes": room.sceneName,
             ]
-            RCSensor.shared?.track("connectionWithDraw", withProperties: ps)
+            RCSensor.shared?.track("connectionWithdraw", withProperties: ps)
         case let .PKClick(room):
             let ps: [String: Any] = [
                 "room_id": room.roomId,
