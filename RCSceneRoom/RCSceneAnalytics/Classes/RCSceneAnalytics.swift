@@ -21,6 +21,7 @@ public class RCSensor {
             .eventTypeAppClick,
             .eventTypeAppViewScreen
         ]
+        options.enableHeatMap = true
         options.setValue(true, forKey: "enableTrackAppCrash")
         #if DEBUG
         options.enableLog = true
@@ -38,7 +39,9 @@ public class RCSensor {
         SensorsAnalyticsSDK.sharedInstance()?.registerDynamicSuperProperties({
             ["is_login": UserDefaults.standard.rongToken() != nil]
         })
-        
+        if let mobile = UserDefaults.standard.mobile() {
+            SensorsAnalyticsSDK.sharedInstance()?.set(["mobile": mobile])
+        }
         SensorsAnalyticsSDK.sharedInstance()?.trackAppInstall()
         
         shared = SensorsAnalyticsSDK.sharedInstance()
@@ -138,9 +141,6 @@ public extension RCSensorAction {
             let ps: [String: Any] = [
                 "room_id": room.roomId,
                 "room_name": room.roomName,
-                "is_private": room.isPrivate,
-                "is_speaker_on": mic,
-                "is_camera_on": camera,
                 "scenes": room.sceneName,
             ]
             RCSensor.shared?.track("closeRoom", withProperties: ps)
