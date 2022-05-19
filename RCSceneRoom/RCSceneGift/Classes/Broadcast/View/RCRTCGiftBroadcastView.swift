@@ -82,7 +82,7 @@ public class RCRTCGiftBroadcastView: UIView {
     private func fetchRoomInfo() {
         giftNetWorkService.roomInfo(roomId: broadcast.roomId) { [weak self] result in
             guard let self = self else { return }
-            switch result.map(RCNetworkWrapper<RCSceneRoom>.self) {
+            switch result.map(RCSceneWrapper<RCSceneRoom>.self) {
             case let .success(wrapper):
                 self.room = wrapper.data
                 self.delegate.broadcastViewWillAppear(self)

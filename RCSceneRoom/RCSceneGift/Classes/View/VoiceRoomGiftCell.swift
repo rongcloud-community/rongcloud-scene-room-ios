@@ -115,7 +115,7 @@ final class VoiceRoomGiftCell: UICollectionViewCell, Reusable {
     
     public func update(_ gift: VoiceRoomGift?) -> Self {
         if let gift = gift {
-            iconImageView.image = UIImage(named: gift.icon)
+            iconImageView.image = UIImage(assetName: gift.icon)
             nameLabel.text = gift.name
             priceLabel.text = "\(gift.price)"
             diamondImageView.image = UIImage(assetName: "gift_diamond")

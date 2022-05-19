@@ -15,7 +15,7 @@ public class RCSceneUserManager {
         }
         let api = RCUserService.usersInfo(id: [userId])
         userProvider.request(api) { result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 guard let list = wrapper.data else {return}
                 for user in list {
@@ -41,7 +41,7 @@ public class RCSceneUserManager {
         downloadingUser[userId] = [completion]
         let api = RCUserService.usersInfo(id: [userId])
         userProvider.request(api) { result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 guard let list = wrapper.data else {return}
                 for user in list {
@@ -65,7 +65,7 @@ public class RCSceneUserManager {
         let ids = userIds.filter { cachedUser[$0] == nil }
         let api = RCUserService.usersInfo(id: ids)
         userProvider.request(api) { result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 let list = wrapper.data ?? []
                 list.forEach { self.cachedUser[$0.userId] = $0 }

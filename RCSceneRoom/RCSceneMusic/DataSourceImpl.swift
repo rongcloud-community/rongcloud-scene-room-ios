@@ -29,7 +29,6 @@ struct BubbleMusicInfo: Codable {
     let backgroundUrl: String
 }
 
-
 public class MusicInfo: NSObject,RCMusicInfo {
 
     override init() {}
@@ -305,7 +304,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
         }
     
         musicService.musicList(roomId: roomId, type: 1) { result in
-            switch result.map(RCNetworkWrapper<[VoiceRoomMusic]>.self) {
+            switch result.map(RCSceneWrapper<[VoiceRoomMusic]>.self) {
                 case let .success(wrapper):
                     if let musics = wrapper.data {
                         var _result = Array<MusicInfo>()
@@ -401,7 +400,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
             return completion(nil)
         }
         musicService.fetchRoomPlayingMusicInfo(roomId: roomId) { result in
-            switch result.map(RCNetworkWrapper<BubbleMusicInfo>.self) {
+            switch result.map(RCSceneWrapper<BubbleMusicInfo>.self) {
                 case let .success(wrapper):
                 if let data = wrapper.data {
                     print("获取直播间正在播放的音乐信息失败,数据为空")

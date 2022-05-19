@@ -5,7 +5,6 @@
 //  Created by xuefeng on 2022/2/7.
 //
 
-import Foundation
 import Moya
 
 public let pkProvider = MoyaProvider<RCPKService>(plugins: [RCServicePlugin])

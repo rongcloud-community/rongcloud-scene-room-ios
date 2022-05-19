@@ -20,7 +20,7 @@ class ForbiddenAppendCell: UICollectionViewCell, Reusable {
         let instance = UIButton()
         instance.isUserInteractionEnabled = false
         instance.backgroundColor = .clear
-        instance.setImage(UIImage(named: "append_forbidden_icon"), for: .normal)
+        instance.setImage(UIImage(roomSetting: "append_forbidden_icon"), for: .normal)
         return instance
     }()
     
