@@ -11,6 +11,7 @@ public enum HomeItem: Int, CaseIterable {
     case videoCall = 10
     case liveVideo = 3
     case radioRoom = 2
+    case gameRoom = 12
     
     public var name: String {
         switch self {
@@ -24,6 +25,8 @@ public enum HomeItem: Int, CaseIterable {
             return "语音通话"
         case .liveVideo:
             return "视频直播"
+        case .gameRoom:
+            return "游戏房"
         }
     }
     
@@ -39,6 +42,8 @@ public enum HomeItem: Int, CaseIterable {
             return "拥有智能降噪的无差别 电话体验"
         case .liveVideo:
             return "视频直播间，支持高级美颜、观众连麦互动"
+        case .gameRoom:
+            return "多种游戏，快速匹配"
         }
     }
 }
