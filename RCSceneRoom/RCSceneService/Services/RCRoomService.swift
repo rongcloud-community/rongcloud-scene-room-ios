@@ -13,6 +13,7 @@ public let roomProvider = MoyaProvider<RCRoomService>(plugins: [RCServicePlugin]
 
 public enum RCRoomService {
     case createRoom(name: String, themePictureUrl: String, backgroundUrl: String, kv: [[String: String]], isPrivate: Int, password: String?, roomType: Int)
+    case createGameRoom(name: String, themePictureUrl: String, backgroundUrl: String, kv: [[String: String]], isPrivate: Int, password: String?, roomType: Int, gameId: String)
     case roomList(type: Int = 1, page: Int, size: Int)
     case setRoomName(roomId: String ,name: String)
     case setRoomType(roomId: String, isPrivate: Bool, password: String?)
@@ -35,6 +36,8 @@ extension RCRoomService: RCServiceType {
     public var path: String {
         switch self {
         case .createRoom:
+            return "mic/room/create"
+        case .createGameRoom:
             return "mic/room/create"
         case .roomList:
             return "mic/room/list"
@@ -75,6 +78,8 @@ extension RCRoomService: RCServiceType {
         switch self {
         case .createRoom:
             return .post
+        case .createGameRoom:
+            return .post
         case .roomList:
             return .get
         case .setRoomName:
@@ -114,6 +119,12 @@ extension RCRoomService: RCServiceType {
         switch self {
         case let .createRoom(name, themePictureUrl, backgroundUrl, kv, isPrivate, password, roomType):
             var params: [String: Any] = ["name": name, "themePictureUrl": themePictureUrl, "kv": kv, "isPrivate": isPrivate, "backgroundUrl": backgroundUrl, "roomType": roomType]
+            if let password = password {
+                params["password"] = password
+            }
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case let .createGameRoom(name, themePictureUrl, backgroundUrl, kv, isPrivate, password, roomType, gameId):
+            var params: [String: Any] = ["name": name, "themePictureUrl": themePictureUrl, "kv": kv, "isPrivate": isPrivate, "backgroundUrl": backgroundUrl, "roomType": roomType, "gameId": gameId]
             if let password = password {
                 params["password"] = password
             }
