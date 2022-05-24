@@ -20,9 +20,6 @@ PODS:
     - Masonry
     - RCCoreKit
     - YYModel
-  - RCSceneRoom/RCSceneAnalytics (0.0.3.4):
-    - RCSceneRoom/RCSceneRoomSetting
-    - SensorsAnalyticsSDK
   - RCSceneRoom/RCSceneGift (0.0.3.4):
     - Kingfisher
     - RCSceneRoom/RCSceneMessage
@@ -34,35 +31,39 @@ PODS:
     - RongCloudIM/IMLib
   - RCSceneRoom/RCSceneMusic (0.0.3.4):
     - RCMusicControlKit
+    - RCSceneRoom/RCSceneMessage
+    - RCSceneRoom/RCSceneService
     - RongCloudRTC/RongRTCLib
     - SVProgressHUD
   - RCSceneRoom/RCSceneRoom (0.0.3.4):
-    - Kingfisher
     - RCSceneChatroomKit
-    - RCSceneRoom/RCSceneMessage
-    - RCSceneRoom/RCSceneService
-    - RCSceneRoom/RCSRBase
+    - RCSceneRoom/RCSceneGift
+    - RCSceneRoom/RCSceneMusic
+    - RCSceneRoom/RCSceneRoomSetting
     - RCSceneRoom/RCSRChat
-    - RCSceneRoom/RCSRPassword
     - RCSceneRoom/RCSRUserControl
-    - Reusable
-    - SVProgressHUD
   - RCSceneRoom/RCSceneRoomSetting (0.0.3.4):
     - RCSceneRoom/RCSceneService
     - RCSceneRoom/RCSRPassword
     - Reusable
-    - SnapKit
   - RCSceneRoom/RCSceneService (0.0.3.4):
     - RCSceneRoom/RCSRBase
     - ReachabilitySwift
+  - RCSceneRoom/RCSRAssets (0.0.3.4)
   - RCSceneRoom/RCSRBase (0.0.3.4):
     - Moya
     - SwiftyBeaver
   - RCSceneRoom/RCSRChat (0.0.3.4):
+    - RCSceneRoom/RCSceneService
     - RongCloudOpenSource/IMKit
+    - SVProgressHUD
   - RCSceneRoom/RCSRPassword (0.0.3.4):
+    - RCSceneRoom/RCSRAssets
+    - RCSceneRoom/RCSRBase
     - SnapKit
   - RCSceneRoom/RCSRUserControl (0.0.3.4):
+    - RCSceneRoom/RCSRAssets
+    - RCSceneRoom/RCSRBase
     - SnapKit
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
@@ -95,22 +96,6 @@ PODS:
   - SDWebImage (5.12.5):
     - SDWebImage/Core (= 5.12.5)
   - SDWebImage/Core (5.12.5)
-  - SensorsAnalyticsSDK (4.3.0):
-    - SensorsAnalyticsSDK/Core (= 4.3.0)
-  - SensorsAnalyticsSDK/__Store (4.3.0)
-  - SensorsAnalyticsSDK/AutoTrack (4.3.0):
-    - SensorsAnalyticsSDK/Common
-  - SensorsAnalyticsSDK/Base (4.3.0):
-    - SensorsAnalyticsSDK/__Store
-  - SensorsAnalyticsSDK/Common (4.3.0):
-    - SensorsAnalyticsSDK/Extension
-  - SensorsAnalyticsSDK/Core (4.3.0):
-    - SensorsAnalyticsSDK/Common
-    - SensorsAnalyticsSDK/Visualized
-  - SensorsAnalyticsSDK/Extension (4.3.0):
-    - SensorsAnalyticsSDK/Base
-  - SensorsAnalyticsSDK/Visualized (4.3.0):
-    - SensorsAnalyticsSDK/AutoTrack
   - SnapKit (5.6.0)
   - SSZipArchive (2.4.3)
   - SVProgressHUD (2.2.5)
@@ -118,11 +103,7 @@ PODS:
   - YYModel (1.0.4)
 
 DEPENDENCIES:
-  - RCSceneRoom/RCSceneAnalytics (from `../`)
-  - RCSceneRoom/RCSceneGift (from `../`)
-  - RCSceneRoom/RCSceneMusic (from `../`)
   - RCSceneRoom/RCSceneRoom (from `../`)
-  - RCSceneRoom/RCSceneRoomSetting (from `../`)
 
 SPEC REPOS:
   trunk:
@@ -140,7 +121,6 @@ SPEC REPOS:
     - RongCloudOpenSource
     - RongCloudRTC
     - SDWebImage
-    - SensorsAnalyticsSDK
     - SnapKit
     - SSZipArchive
     - SVProgressHUD
@@ -160,20 +140,19 @@ SPEC CHECKSUMS:
   RCCoreKit: 3f143441ac62880b454cca9066f526a27c45d4ce
   RCMusicControlKit: f6eb6d366be36e14ab8869de970d2acb03bc23f7
   RCSceneChatroomKit: 95ae23f682d932281090b272ef7752241480224d
-  RCSceneRoom: 49218c285d43f1e3db86edc85e368654e39eb2df
+  RCSceneRoom: 87d93c2cfc582e8adf4d0d6f5efd18c308943b07
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: 30141889350ad0bc47a88256aa68c2a7328e5b6c
   RongCloudOpenSource: 30f2664a5289efec401b8d8a2162cb499d5b66c3
   RongCloudRTC: ed2ce209746c3f2e175a5fb7f1cd00ab0df53c0b
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
-  SensorsAnalyticsSDK: a0b98db9b33904e7de1bbcb36a4ebd18d8621b0e
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 925dd72e8ec1443ad93ff4c06b73da26c6171255
+PODFILE CHECKSUM: e3d0b527a1559ef414e714e4775312c81ae9c7ce
 
 COCOAPODS: 1.11.3

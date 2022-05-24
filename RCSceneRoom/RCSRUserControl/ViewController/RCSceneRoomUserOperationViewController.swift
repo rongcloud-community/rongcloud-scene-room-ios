@@ -276,7 +276,7 @@ public class RCSceneRoomUserOperationViewController: UIViewController {
     }
     
     private func setupStackView() {
-        guard let scene = HomeItem(rawValue: dependency.room.roomType ?? 1) else { return }
+        guard let scene = RCScene(rawValue: dependency.room.roomType ?? 1) else { return }
         let buttonlist: [UIButton] = {
             switch dependency.currentUserRole {
             case .creator:
@@ -295,8 +295,7 @@ public class RCSceneRoomUserOperationViewController: UIViewController {
                     } else {
                         return [pickUpButton, kickOutButton]
                     }
-                case .gameRoom: return []
-                    
+                default: return []
                 }
             case .manager:
                 guard
@@ -310,10 +309,8 @@ public class RCSceneRoomUserOperationViewController: UIViewController {
                     } else {
                         return [pickUpButton, kickOutButton]
                     }
-                case .videoCall: return []
-                case .audioCall: return []
                 case .radioRoom: return [kickOutButton]
-                case .gameRoom: return []
+                default: return []
                 }
             case .audience:
                 return []

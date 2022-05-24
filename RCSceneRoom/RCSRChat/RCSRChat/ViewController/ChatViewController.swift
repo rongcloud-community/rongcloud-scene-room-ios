@@ -5,7 +5,6 @@
 //  Created by shaoshuai on 2021/5/27.
 //
 
-import UIKit
 import SVProgressHUD
 
 public class ChatViewController: RCConversationViewController {

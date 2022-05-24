@@ -48,7 +48,7 @@ public class RCSRPasswordViewController: UIViewController {
         instance.backgroundColor = .clear
         instance.titleLabel?.font = .systemFont(ofSize: 17)
         instance.setTitle("提交", for: .normal)
-        instance.setTitleColor(RCSCAsset.Colors.hexEF499A.color, for: .normal)
+        instance.setTitleColor(UIColor(hexString: "#EF499A"), for: .normal)
         instance.addTarget(self, action: #selector(handleInputPassword), for: .touchUpInside)
         return instance
     }()

@@ -1,11 +1,4 @@
-//
-//  RCSceneRoomUserCell.swift
-//  RCE
-//
-//  Created by 叶孤城 on 2021/5/11.
-//
 
-import UIKit
 import SnapKit
 import Reusable
 import Kingfisher

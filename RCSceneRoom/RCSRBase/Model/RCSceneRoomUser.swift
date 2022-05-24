@@ -35,10 +35,6 @@ public struct User: Identifiable, Codable {
     public var id: String {
         return userId
     }
-    
-    public var portraitUrl: String {
-        return Environment.url.absoluteString + "file/show?path=" + (portrait ?? "")
-    }
 }
 
 public struct RCSceneRoomUser: Codable, Equatable {
@@ -46,13 +42,6 @@ public struct RCSceneRoomUser: Codable, Equatable {
     public let userName: String
     public let portrait: String?
     public let status: Int?
-    
-    public var portraitUrl: String {
-        if let portrait = portrait, portrait.count > 0 {
-            return Environment.url.absoluteString + "file/show?path=" + portrait
-        }
-        return "https://cdn.ronghub.com/demo/default/rce_default_avatar.png"
-    }
     
     public var isFollow: Bool {
         return status == 1
