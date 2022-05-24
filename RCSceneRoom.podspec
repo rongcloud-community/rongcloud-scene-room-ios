@@ -84,6 +84,7 @@ Pod::Spec.new do |s|
     control.dependency 'SVProgressHUD'
     control.dependency 'RCSceneRoom/RCSRBase'
     control.dependency 'RCSceneRoom/RCSRAssets'
+    control.dependency 'RCSceneRoom/RCSceneService'
   end
   
   s.subspec 'RCSRChat' do |chat|
