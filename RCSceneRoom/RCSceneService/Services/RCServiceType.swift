@@ -1,28 +1,17 @@
 //
-//  RCServiceType.swift
+//  RCSServiceType.swift
 //  RCE
 //
 //  Created by xuefeng on 2022/1/28.
 //
 
-import Moya
 import Foundation
 
-let RCServicePlugin: NetworkLoggerPlugin = {
-    let plgn = NetworkLoggerPlugin()
-    plgn.configuration.logOptions = .verbose
-    return plgn
-}()
-
-protocol RCServiceType: TargetType {}
-
-extension RCServiceType {
-    
-    public var baseURL: URL {
+public extension RCSServiceType {
+    var baseURL: URL {
         return Environment.url
     }
-    
-    public var headers: [String : String]? {
+    var headers: [String : String]? {
         var header = [String: String]()
         if let auth = UserDefaults.standard.authorizationKey() {
             header["Authorization"] = auth
@@ -30,10 +19,4 @@ extension RCServiceType {
         header["BusinessToken"] = Environment.businessToken
         return header
     }
-    
-    public var sampleData: Data {
-        return Data()
-    }
 }
-
-public typealias RCSceneServiceCompletion = Moya.Completion

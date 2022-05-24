@@ -11,12 +11,6 @@ import RCMusicControlKit
 
 public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelegate {
     
-    public enum PlayerRoomType {
-        case voice
-        case radio
-        case live
-    }
-    
     public static let instance = PlayerImpl()
     
     //用户耳返开关状态
@@ -138,6 +132,7 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         return success
     }
     
+    @discardableResult
     public func stopMixing(with info: RCMusicInfo?) -> Bool {
         if let info = info ,let currentInfo = currentPlayingMusic, info.musicId == currentInfo.musicId {
             return pause()
@@ -249,8 +244,8 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         let tmp = currentPlayingMusic
         currentPlayingMusic = nil
         currentPausingMusic = nil
-        isSilence = false
         needResumePlayer = false
+        isSilence = false
         if (tmp != nil) {
             let _ = stopMixing(with: nil)
         }

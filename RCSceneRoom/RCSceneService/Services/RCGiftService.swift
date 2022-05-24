@@ -8,14 +8,14 @@
 import Foundation
 import Moya
 
-public let giftProvider = MoyaProvider<RCGiftService>(plugins: [RCServicePlugin])
+public let giftProvider = RCSProvider<RCGiftService>(plugins: [RCSServiceLogger])
 
 public enum RCGiftService {
     case giftList(roomId: String)
     case sendGift(roomId: String, giftId: String, toUid: String, num: Int)
 }
 
-extension RCGiftService: RCServiceType {
+extension RCGiftService: RCSServiceType {
     public var path: String {
         switch self {
         case let .giftList(roomId):

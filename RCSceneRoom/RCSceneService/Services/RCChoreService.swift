@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public let choreProvider = MoyaProvider<RCChoreService>(plugins: [RCServicePlugin])
+public let choreProvider = RCSProvider<RCChoreService>(plugins: [RCSServiceLogger])
 
 public enum RCChoreService {
     case feedback(isGoodFeedback: Bool, reason: String?)
@@ -16,7 +16,7 @@ public enum RCChoreService {
     case checkText(text: String)
 }
 
-extension RCChoreService: RCServiceType {
+extension RCChoreService: RCSServiceType {
     
     public var path: String {
         switch self {
@@ -56,6 +56,3 @@ extension RCChoreService: RCServiceType {
         }
     }
 }
-
-
-

@@ -5,14 +5,11 @@
 //  Created by xuefeng on 2021/11/30.
 //
 
-import UIKit
 import SVProgressHUD
 
 public class DelegateImpl: NSObject, RCMusicEngineDelegate {
     
     public static let instance = DelegateImpl()
-    
-    public var roomId: String?
 
     var downloadingMusicId: String?
     
@@ -22,7 +19,12 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
     
     public func downloadedMusic(_ music: RCMusicInfo, completion: @escaping (Bool) -> Void) {
         
-        guard let music = music as? MusicInfo, let roomId = DelegateImpl.instance.roomId, let url = music.fileUrl, let musicId = music.musicId else {
+        guard
+            let music = music as? MusicInfo,
+            let roomId = currentRoom?.roomId,
+            let url = music.fileUrl,
+            let musicId = music.musicId
+        else {
             SVProgressHUD.showError(withStatus: "参数错误")
             return completion(false)
         }
@@ -85,7 +87,12 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
     }
     
     public func deleteMusic(_ music: RCMusicInfo, completion: @escaping (Bool) -> Void) {
-        guard let roomId = DelegateImpl.instance.roomId, let musicId = music.musicId, let info = music as? MusicInfo, let id = info.id else {
+        guard
+            let roomId = currentRoom?.roomId,
+            let musicId = music.musicId,
+            let info = music as? MusicInfo,
+            let id = info.id
+        else {
             SVProgressHUD.showError(withStatus: "参数错误，roomId为空")
             return completion(false)
         }
@@ -111,7 +118,11 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
     
     
     public func topMusic(_ music1: RCMusicInfo?, withMusic music2: RCMusicInfo, completion: @escaping (Bool) -> Void) {
-        guard let roomId = DelegateImpl.instance.roomId, let info2 = music2 as? MusicInfo, let id2 = info2.id  else {
+        guard
+            let roomId = currentRoom?.roomId,
+            let info2 = music2 as? MusicInfo,
+            let id2 = info2.id
+        else {
             SVProgressHUD.showError(withStatus: "参数错误")
             return completion(false)
         }
@@ -145,7 +156,7 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
     //开始播放 同步状态时 info != nil
     //暂停播放 同步状态时 info == nil
     func syncPlayingMusicInfo(_ info: MusicInfo?,_ completion: @escaping () -> Void) {
-        guard let roomId = roomId else {
+        guard let roomId = currentRoom?.roomId else {
             print("同步音乐信息失败，房间ID不能为空")
             return
         }

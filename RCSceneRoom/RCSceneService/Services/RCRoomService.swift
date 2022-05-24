@@ -8,8 +8,7 @@
 import Foundation
 import Moya
 
-
-public let roomProvider = MoyaProvider<RCRoomService>(plugins: [RCServicePlugin])
+public let roomProvider = RCSProvider<RCRoomService>(plugins: [RCSServiceLogger])
 
 public enum RCRoomService {
     case createRoom(name: String, themePictureUrl: String, backgroundUrl: String, kv: [[String: String]], isPrivate: Int, password: String?, roomType: Int)
@@ -31,7 +30,7 @@ public enum RCRoomService {
     case checkCreatedRoom(type: Int)
 }
 
-extension RCRoomService: RCServiceType {
+extension RCRoomService: RCSServiceType {
     public var path: String {
         switch self {
         case .createRoom:

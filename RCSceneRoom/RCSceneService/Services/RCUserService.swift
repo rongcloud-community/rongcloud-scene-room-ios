@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public let userProvider = MoyaProvider<RCUserService>(plugins: [RCServicePlugin])
+public let userProvider = RCSProvider<RCUserService>(plugins: [RCSServiceLogger])
 
 public enum RCUserService {
     case usersInfo(id: [String])
@@ -21,7 +21,7 @@ public enum RCUserService {
     case resign
 }
 
-extension RCUserService: RCServiceType {
+extension RCUserService: RCSServiceType {
     
     public var path: String {
         switch self {

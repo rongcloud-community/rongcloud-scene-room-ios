@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneRoom'
-  s.version          = '0.0.3.3'
+  s.version          = '0.0.3.4'
   s.summary          = 'Scene Room'
   s.description      = "Scene Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -24,12 +24,38 @@ Pod::Spec.new do |s|
   # 3 - subspecs
   s.default_subspec = 'RCSceneRoom'
   
-  s.subspec 'RCSceneFoundation' do |foundation|
+  s.subspec 'RCSRBase' do |base|
     # 1 - source
-    foundation.source_files = 'RCSceneRoom/RCSceneFoundation/**/*.{h,m,swift}'
+    base.source_files = 'RCSceneRoom/RCSRBase/**/*.{h,swift}'
     
     # 2 - dependency
-    foundation.dependency 'SwiftyBeaver'
+    base.dependency 'Moya'
+    base.dependency 'SwiftyBeaver'
+  end
+  
+  s.subspec 'RCSRPassword' do |password|
+    # 1 - source
+    password.source_files = 'RCSceneRoom/RCSRPassword/**/*.{h,swift}'
+    
+    # 2 - dependency
+    password.dependency 'SnapKit'
+  end
+  
+  s.subspec 'RCSRUserControl' do |control|
+    # 1 - source
+    control.source_files = 'RCSceneRoom/RCSRUserControl/**/*.{h,swift}'
+    
+    # 2 - dependency
+    control.dependency 'SnapKit'
+  end
+  
+  s.subspec 'RCSRChat' do |chat|
+    # 1 - source
+    chat.source_files = 'RCSceneRoom/RCSRChat/**/*.{h,swift}'
+    
+    # 2 - dependency
+    # suggestion version >= 5.1.8
+    chat.dependency 'RongCloudOpenSource/IMKit'
   end
   
   s.subspec 'RCSceneMessage' do |message|
@@ -51,9 +77,9 @@ Pod::Spec.new do |s|
     # 2 - config
     
     # 3 - dependency
-    service.dependency 'Moya'
     service.dependency 'ReachabilitySwift'
-    service.dependency 'RCSceneRoom/RCSceneFoundation'
+    
+    service.dependency 'RCSceneRoom/RCSRBase'
   end
   
   s.subspec 'RCSceneGift' do |gift|
@@ -85,8 +111,8 @@ Pod::Spec.new do |s|
     # 2 - config
     
     # 3 - dependency
-    music.dependency 'RCSceneRoom/RCSceneMessage'
-    music.dependency 'RCSceneRoom/RCSceneService'
+#    music.dependency 'RCSceneRoom/RCSceneMessage'
+#    music.dependency 'RCSceneRoom/RCSceneService'
     
     music.dependency 'SVProgressHUD'
     music.dependency 'RCMusicControlKit'
@@ -102,9 +128,8 @@ Pod::Spec.new do |s|
       'RCSceneRoomSetting' => ['RCSceneRoom/RCSceneRoomSetting/Assets/*.xcassets']
     }
     
-    # 3 - config
-    
-    # 4 - dependency
+    # 3 - dependency
+    setting.dependency 'RCSceneRoom/RCSRPassword'
     setting.dependency 'RCSceneRoom/RCSceneService'
     
     setting.dependency 'SnapKit'
@@ -129,18 +154,16 @@ Pod::Spec.new do |s|
       'RCSceneRoom' => ['RCSceneRoom/RCSceneRoom/Assets/*.xcassets']
     }
     
-    # 3 - config
-    
-    # 4 - dependency
+    # 3 - dependency
+    room.dependency 'RCSceneRoom/RCSRBase'
+    room.dependency 'RCSceneRoom/RCSRChat'
+    room.dependency 'RCSceneRoom/RCSRPassword'
     room.dependency 'RCSceneRoom/RCSceneMessage'
     room.dependency 'RCSceneRoom/RCSceneService'
-    room.dependency 'RCSceneRoom/RCSceneFoundation'
+    room.dependency 'RCSceneRoom/RCSRUserControl'
+    
     room.dependency 'RCSceneChatroomKit'
     
-    # suggestion version >= 5.1.8
-    room.dependency 'RongCloudOpenSource/IMKit'
-    
-    room.dependency 'SnapKit'
     room.dependency 'Reusable'
     room.dependency 'Kingfisher'
     room.dependency 'SVProgressHUD'
