@@ -21,12 +21,28 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum RCSCAsset {
+  public enum Colors {
+    public static let hex03062F = ColorAsset(name: "Hex03062F")
+    public static let hex505DFF = ColorAsset(name: "Hex505DFF")
+    public static let hexCDCDCD = ColorAsset(name: "HexCDCDCD")
+    public static let hexDFDFDF = ColorAsset(name: "HexDFDFDF")
+    public static let hexE92B88 = ColorAsset(name: "HexE92B88")
+    public static let hexEF499A = ColorAsset(name: "HexEF499A")
+    public static let hexF8E71C = ColorAsset(name: "HexF8E71C")
+  }
   public enum Images {
     public static let rcBeautyEffect = ImageAsset(name: "rc_beauty_effect")
     public static let rcBeautyMakeup = ImageAsset(name: "rc_beauty_makeup")
     public static let rcBeautyRetouch = ImageAsset(name: "rc_beauty_retouch")
     public static let rcBeautySticker = ImageAsset(name: "rc_beauty_sticker")
     public static let rcBeautySwitchCamera = ImageAsset(name: "rc_beauty_switch_camera")
+    public static let hex03062F = ColorAsset(name: "Hex03062F")
+    public static let hex505DFF = ColorAsset(name: "Hex505DFF")
+    public static let hexCDCDCD = ColorAsset(name: "HexCDCDCD")
+    public static let hexDFDFDF = ColorAsset(name: "HexDFDFDF")
+    public static let hexE92B88 = ColorAsset(name: "HexE92B88")
+    public static let hexEF499A = ColorAsset(name: "HexEF499A")
+    public static let hexF8E71C = ColorAsset(name: "HexF8E71C")
     public static let customServiceContact = ImageAsset(name: "custom_service_contact")
     public static let customerServiceAvatar = ImageAsset(name: "customer_service_avatar")
     public static let dialCallingIcon = ImageAsset(name: "dial_calling_icon")
@@ -206,15 +222,6 @@ public enum RCSCAsset {
     public static let videoTypeUnselected = ImageAsset(name: "video_type_unselected")
     public static let voiceVolumeTube = ImageAsset(name: "voice_volume_tube")
   }
-  public enum Colors {
-    public static let hex03062F = ColorAsset(name: "Hex03062F")
-    public static let hex505DFF = ColorAsset(name: "Hex505DFF")
-    public static let hexCDCDCD = ColorAsset(name: "HexCDCDCD")
-    public static let hexDFDFDF = ColorAsset(name: "HexDFDFDF")
-    public static let hexE92B88 = ColorAsset(name: "HexE92B88")
-    public static let hexEF499A = ColorAsset(name: "HexEF499A")
-    public static let hexF8E71C = ColorAsset(name: "HexF8E71C")
-  }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
@@ -320,15 +327,3 @@ public extension ImageAsset.Image {
     #endif
   }
 }
-
-// swiftlint:disable convenience_type
-private final class BundleToken {
-  static let bundle: Bundle = {
-    #if SWIFT_PACKAGE
-    return Bundle.module
-    #else
-    return Bundle(for: BundleToken.self)
-    #endif
-  }()
-}
-// swiftlint:enable convenience_type

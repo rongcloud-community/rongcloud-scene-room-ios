@@ -11,7 +11,7 @@ public struct RCSceneRoom: Codable, Identifiable, Equatable {
     public let id: Int
     public let roomId: String
     public var roomName: String
-    public var themePictureUrl: String
+    public var themePictureUrl: String?
     public var backgroundUrl: String?
     public var isPrivate: Int
     public var password: String?
