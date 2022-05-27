@@ -66,14 +66,14 @@ public class MusicInfo: NSObject, RCMusicInfo {
     }
     
     func fullPath() -> String? {
-        guard let musicId = musicId, let dir = DataSourceImpl.musicDir() else {
+        guard let musicId = musicId, let dir = RCSMusicDataSource.musicDir() else {
             return nil
         }
         return dir + "/" + musicId
     }
     
     static func localMusic(_ fileURL: URL) -> MusicInfo? {
-        guard var filePath = DataSourceImpl.musicDir() else {
+        guard var filePath = RCSMusicDataSource.musicDir() else {
             return nil
         }
         do {

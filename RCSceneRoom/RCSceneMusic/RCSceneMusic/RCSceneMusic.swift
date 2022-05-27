@@ -27,21 +27,24 @@ public class RCSceneMusic {
     public static func active(_ config: RCSceneMusicConfig) {
         guard config.clientId.count > 0 else { return debugPrint("clientId empty") }
         musicConfig = config
-        RCMusicEngine.shareInstance().delegate = DelegateImpl.instance
-        RCMusicEngine.shareInstance().player = PlayerImpl.instance
-        RCMusicEngine.shareInstance().dataSource = DataSourceImpl.instance
+        RCMusicEngine.shareInstance().delegate = RCSMusicDelegate.instance
+        RCMusicEngine.shareInstance().player = RCSMusicPlayer.instance
+        RCMusicEngine.shareInstance().dataSource = RCSMusicDataSource.instance
     }
     
-    public static func join(_ room: RCSceneRoom) {
+    public static func join(_ room: RCSceneRoom, bubbleView: RCMusicInfoBubbleView) {
+        RCCoreClient.shared().add(RCSMusicPlayer.instance)
+        RCSMusicPlayer.instance.bubbleView = bubbleView
         guard let config = musicConfig, config.clientId.count > 0 else {
             return
         }
         currentRoom = room
-        PlayerImpl.instance.initializedEarMonitoring()
-        if room.userId != config.clientId {
-            DataSourceImpl.instance.fetchRoomPlayingMusicInfo { info in
-                RCMusicEngine.musicInfoBubbleView?.info = info;
-            }
+        RCSMusicPlayer.instance.initializedEarMonitoring()
+        guard room.userId != config.clientId else {
+            return
+        }
+        RCSMusicDataSource.instance.fetchRoomPlayingMusicInfo { info in
+            bubbleView.info = info;
         }
     }
     
@@ -52,18 +55,18 @@ public class RCSceneMusic {
         guard room.userId == musicConfig?.clientId else {
             return
         }
-        switch PlayerImpl.instance.currentPlayState {
+        switch RCSMusicPlayer.instance.currentPlayState {
         case .mixingStatePlaying, .mixingStatePause: ()
         default: return
         }
-        PlayerImpl.instance.stopMixing(with: nil)
+        RCSMusicPlayer.instance.stopMixing(with: nil)
     }
     
     public static func clear() {
         currentRoom = nil
-        DataSourceImpl.instance.clear()
-        PlayerImpl.instance.clear()
-        DelegateImpl.instance.clear()
+        RCSMusicDataSource.instance.clear()
+        RCSMusicPlayer.instance.clear()
+        RCSMusicDelegate.instance.clear()
     }
 }
 

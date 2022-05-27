@@ -8,9 +8,9 @@
 import AVFoundation
 import SVProgressHUD
 
-public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
+public class RCSMusicDataSource: NSObject, RCMusicEngineDataSource {
     
-    public static let instance = DataSourceImpl()
+    public static let instance = RCSMusicDataSource()
     
     var musics: Array<MusicInfo>?
     
@@ -65,7 +65,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
                 }
                 sem.signal()
             } fail: { error in
-                print("DataSourceImpl fetch groupId fail")
+                print("RCSMusicDataSource fetch groupId fail")
                 SVProgressHUD.showError(withStatus: "获取歌曲类别失败")
                 sem.signal()
                 return completion(nil)
@@ -74,7 +74,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
             let _ = sem.wait(timeout: .now() + 20)
             
             guard let groupId = self.groupId else {
-                print("DataSourceImpl groupId is nil")
+                print("RCSMusicDataSource groupId is nil")
                 return completion(nil)
             }
             
@@ -94,10 +94,10 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
                     }
                 }
                 completion(result)
-                print("DataSourceImpl fetch categories success")
+                print("RCSMusicDataSource fetch categories success")
             } fail: { error  in
                 completion(nil)
-                print("DataSourceImpl fetch categories failed \(error.debugDescription)")
+                print("RCSMusicDataSource fetch categories failed \(error.debugDescription)")
             }
         }
     }
@@ -123,10 +123,10 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
                 }
             }
             completion(result)
-            print("DataSourceImpl fetch musics success")
+            print("RCSMusicDataSource fetch musics success")
         } fail: { error in
             completion(nil)
-            print("DataSourceImpl fetch musics failed \(error?.localizedDescription ?? "")")
+            print("RCSMusicDataSource fetch musics failed \(error?.localizedDescription ?? "")")
             SVProgressHUD.showError(withStatus: "在线歌曲获取失败")
         }
     }
@@ -134,7 +134,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
     
     public func fetchCollectMusics(_ completion: @escaping ([Any]?) -> Void) {
         guard let roomId = currentRoom?.roomId else {
-            print("DataSourceImpl fetch collection musics failed roomId is nil")
+            print("RCSMusicDataSource fetch collection musics failed roomId is nil")
             SVProgressHUD.showError(withStatus: "收藏歌曲获取失败，roomId不能为空")
             return completion(nil)
         }
@@ -156,16 +156,16 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
                             musicInfo.id = music.id
                             _result.append(musicInfo)
                             if (musicInfo.musicId != nil) {
-                                DataSourceImpl.instance.ids.insert(musicInfo.musicId!)
+                                RCSMusicDataSource.instance.ids.insert(musicInfo.musicId!)
                             }
                         }
-                        if (DelegateImpl.instance.autoPlayMusic) {
-                            DelegateImpl.instance.autoPlayMusic = false
+                        if (RCSMusicDelegate.instance.autoPlayMusic) {
+                            RCSMusicDelegate.instance.autoPlayMusic = false
                             if let info = _result.first {
-                                let _ = PlayerImpl.instance.startMixing(with: info)
+                                let _ = RCSMusicPlayer.instance.startMixing(with: info)
                             }
                         }
-                        DataSourceImpl.instance.musics = _result
+                        RCSMusicDataSource.instance.musics = _result
                         completion(_result)
                     } else {
                         completion(nil)
@@ -197,7 +197,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
             completion(info)
         } fail: { error in
             completion(nil)
-            print("DataSourceImpl fetch music detail failed \(error?.localizedDescription ?? "")")
+            print("RCSMusicDataSource fetch music detail failed \(error?.localizedDescription ?? "")")
             SVProgressHUD.showError(withStatus: "歌曲详情获取失败")
         }
     }
@@ -225,7 +225,7 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
             completion(result)
         } fail: { error in
             completion(nil)
-            print("DataSourceImpl fetch search result failed \(error?.localizedDescription ?? "")")
+            print("RCSMusicDataSource fetch search result failed \(error?.localizedDescription ?? "")")
             SVProgressHUD.showError(withStatus: "获取搜索结果失败")
         }
     }
@@ -256,11 +256,11 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
     }
     
     public func musicIsExist(_ info: RCMusicInfo) -> Bool {
-        guard let _ = DataSourceImpl.instance.musics, let musicId = info.musicId else {
+        guard let _ = RCSMusicDataSource.instance.musics, let musicId = info.musicId else {
             return false
         }
         
-        return DataSourceImpl.instance.ids.contains(musicId)
+        return RCSMusicDataSource.instance.ids.contains(musicId)
     }
     
     public func fetchSoundEffects(completion: @escaping ([Any]?) -> Void) {
@@ -327,12 +327,12 @@ public class DataSourceImpl: NSObject, RCMusicEngineDataSource {
     }
     
     public func clear() {
-        DataSourceImpl.instance.ids.removeAll()
-        DataSourceImpl.instance.musics = nil
+        RCSMusicDataSource.instance.ids.removeAll()
+        RCSMusicDataSource.instance.musics = nil
     }
 }
 
-extension DataSourceImpl: UIDocumentPickerDelegate, UIDocumentInteractionControllerDelegate {
+extension RCSMusicDataSource: UIDocumentPickerDelegate, UIDocumentInteractionControllerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         if let url = urls.first(where: { !availableAudioFileExtensions.contains($0.pathExtension) }) {
             return SVProgressHUD.showError(withStatus: "不支持的类型：" + url.pathExtension)
@@ -344,7 +344,7 @@ extension DataSourceImpl: UIDocumentPickerDelegate, UIDocumentInteractionControl
         DispatchQueue.global().async {
             for music in musics {
                 if (music.localDataFilePath != nil) {
-                    DelegateImpl.instance.downloadedMusic(music) { success in
+                    RCSMusicDelegate.instance.downloadedMusic(music) { success in
                         if (success) {
                             SVProgressHUD.showSuccess(withStatus: "本地文件上传成功")
                         } else {

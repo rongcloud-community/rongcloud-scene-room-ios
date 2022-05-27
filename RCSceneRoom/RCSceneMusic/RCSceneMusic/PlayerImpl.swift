@@ -9,9 +9,13 @@ import RongRTCLib
 import SVProgressHUD
 import RCMusicControlKit
 
-public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelegate {
+public typealias PlayerImpl = RCSMusicPlayer
+
+private let kMusicBubbleViewEventName = "RCVoiceSyncMusicInfoKey"
+
+public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelegate {
     
-    public static let instance = PlayerImpl()
+    public static let instance = RCSMusicPlayer()
     
     //用户耳返开关状态
     private var openEarMonitoring = false
@@ -24,6 +28,8 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     //语聊房静音需要同步暂停音乐
     
     var needResumePlayer = false
+    
+    weak var bubbleView: RCMusicInfoBubbleView?
     
     public var isSilence: Bool = false {
         willSet {
@@ -88,7 +94,6 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     }
     
     public func setEarOpenMonitoring(_ on: Bool) {
-//        RCRTCEngine.sharedInstance().audioEffectManager.enable(inEarMonitoring: on)
         openEarMonitoring = on && isHeadsetPluggedIn()
         RCMusicEngine.shareInstance().openEarMonitoring = openEarMonitoring
         RCRTCEngine.sharedInstance().audioEffectManager.enable(inEarMonitoring:openEarMonitoring)
@@ -109,14 +114,14 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
             return RCRTCAudioMixer.sharedInstance().resume()
         }
         
-        guard let fileName = info.musicId, let musicDir = DataSourceImpl.musicDir() else {
+        guard let fileName = info.musicId, let musicDir = RCSMusicDataSource.musicDir() else {
             print("startMixing info fileName must be nonnull");
             return false
         }
         var success = false
         let filePath = musicDir + "/" + fileName
         if (!FileManager.default.fileExists(atPath: filePath)) {
-            DataSourceImpl.instance.fetchMusicDetail(with: info) { detail in
+            RCSMusicDataSource.instance.fetchMusicDetail(with: info) { detail in
                 guard let music = detail as? MusicInfo else {
                     return
                 }
@@ -169,9 +174,7 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
         handleState(currentPlayState)
                 
         syncRoomPlayingMusicInfo { [weak self] in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.sendCommandMessage()
         }
         
@@ -179,7 +182,6 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     }
     
     public func didReportPlayingProgress(_ progress: Float) {
-        
     }
     
     func handleState(_ mixingState: RCRTCAudioMixingState) {
@@ -194,7 +196,7 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     
     func handleStopState() {
         guard let tmp = currentPlayingMusic as? MusicInfo,
-              let musics = DataSourceImpl.instance.musics,
+              let musics = RCSMusicDataSource.instance.musics,
               let index = musics.firstIndex(of: tmp) else { return }
         if (index >= musics.count - 1) {
             currentPausingMusic = nil
@@ -220,24 +222,26 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     
     func sendCommandMessage() {
         //发送控制消息 同步歌曲信息到观众房间
-        var musicId = 0
-        if  let musicInfo = currentPlayingMusic as? MusicInfo, let id = musicInfo.id {
-            musicId = id
-        }
-        guard let commandMessage = RCCommandMessage(name: "RCVoiceSyncMusicInfoKey", data: String(musicId)) else {
-            return
-        }
-        let roomId = RCRTCEngine.sharedInstance().room.roomId
-        RCCoreClient.shared().sendMessage(.ConversationType_CHATROOM, targetId: roomId, content: commandMessage, pushContent: "", pushData: "") { mId in
-            print(" voice 同步歌曲信息消息发送成功");
-        } error: { code, mId in
-            print(" voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)");
-        }
+        let musicId = (currentPlayingMusic as? MusicInfo)?.id ?? 0
+        let message = RCCommandMessage(name: kMusicBubbleViewEventName,
+                                       data: String(musicId))!
+        var roomId: String? = RCRTCEngine.sharedInstance().room.roomId
+        guard let roomId = roomId else { return }
+        RCCoreClient.shared()
+            .sendMessage(.ConversationType_CHATROOM,
+                         targetId: roomId,
+                         content: message,
+                         pushContent: "",
+                         pushData: "") { mId in
+                RCSRLog.debug("voice 同步歌曲信息消息发送成功")
+            } error: { code, mId in
+                RCSRLog.error("voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)")
+            }
     }
     
     func syncRoomPlayingMusicInfo(_ completion: @escaping () -> Void) {
         let info = currentPlayingMusic as? MusicInfo
-        DelegateImpl.instance.syncPlayingMusicInfo(info,completion)
+        RCSMusicDelegate.instance.syncPlayingMusicInfo(info,completion)
     }
     
     public func clear() {
@@ -269,5 +273,25 @@ public class PlayerImpl: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDelega
     @objc private func onRouteChanged(_ notification: Notification) {
         setEarOpenMonitoring(openEarMonitoring)
     }
+}
 
+extension RCSMusicPlayer: RCIMClientReceiveMessageDelegate {
+    public func onReceived(_ message: RCMessage!, left nLeft: Int32, object: Any!) {
+        guard
+            let content = message.content as? RCCommandMessage,
+            content.name == kMusicBubbleViewEventName
+        else { return }
+        if content.data == "0" { updateBubble() }
+        RCSMusicDataSource.instance.fetchCollectMusics { [weak self] infos in
+            let items = infos?.compactMap { $0 as? MusicInfo }
+            let info = items?.first { "\($0.id ?? 0)" == content.data }
+            self?.updateBubble(info)
+        }
+    }
+    
+    private func updateBubble(_ info: MusicInfo? = nil) {
+        DispatchQueue.main.async {
+            self.bubbleView?.info = info
+        }
+    }
 }

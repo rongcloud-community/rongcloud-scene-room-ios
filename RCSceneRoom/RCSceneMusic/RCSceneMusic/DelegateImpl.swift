@@ -1,5 +1,5 @@
 //
-//  DelegateImpl.swift
+//  RCSMusicDelegate.swift
 //  RCE
 //
 //  Created by xuefeng on 2021/11/30.
@@ -7,9 +7,9 @@
 
 import SVProgressHUD
 
-public class DelegateImpl: NSObject, RCMusicEngineDelegate {
+public class RCSMusicDelegate: NSObject, RCMusicEngineDelegate {
     
-    public static let instance = DelegateImpl()
+    public static let instance = RCSMusicDelegate()
 
     var downloadingMusicId: String?
     
@@ -30,11 +30,11 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
         }
         
         //如果当前下载的音乐和即将下载的音乐相同时过滤掉
-        if (DelegateImpl.instance.downloadingMusicId == musicId || DataSourceImpl.instance.ids.contains(musicId)) {
+        if (RCSMusicDelegate.instance.downloadingMusicId == musicId || RCSMusicDataSource.instance.ids.contains(musicId)) {
             return completion(false)
         }
         
-        DelegateImpl.instance.downloadingMusicId = musicId
+        RCSMusicDelegate.instance.downloadingMusicId = musicId
         func downloadFailed() {
             completion(false)
             semaphore.signal()
@@ -63,11 +63,11 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
                                 switch result.map(RCSceneResponse.self) {
                                 case .success:
                                     completion(true)
-                                    if (DataSourceImpl.instance.ids.count == 0) {
+                                    if (RCSMusicDataSource.instance.ids.count == 0) {
                                         //当列表为空时，添加的第一首音乐自动播放
                                         self.autoPlayMusic = true
                                     }
-                                    DataSourceImpl.instance.ids.insert(musicId)
+                                    RCSMusicDataSource.instance.ids.insert(musicId)
                                     NotificationCenter.default.post(name: .RCMusicLocalDataChanged, object: nil)
                                     self.clear()
                                     self.semaphore.signal()
@@ -104,7 +104,7 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
                     switch result.map(RCSceneResponse.self) {
                     case .success:
                         completion(true)
-                        DataSourceImpl.instance.ids.remove(musicId)
+                        RCSMusicDataSource.instance.ids.remove(musicId)
                         NotificationCenter.default.post(name: .RCMusicLocalDataChanged, object: nil)
                     case .failure:
                         completion(false)
@@ -138,8 +138,8 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
                     switch result.map(RCSceneResponse.self) {
                     case .success:
                         //音乐置顶成功后，如果当前没有播放的音乐，开始播放置顶音乐
-                        if (PlayerImpl.instance.currentPlayingMusic == nil) {
-                            let _ = PlayerImpl.instance.startMixing(with: info2)
+                        if (RCSMusicPlayer.instance.currentPlayingMusic == nil) {
+                            let _ = RCSMusicPlayer.instance.startMixing(with: info2)
                         }
                         completion(true)
                         NotificationCenter.default.post(name: .RCMusicLocalDataChanged, object: nil)
@@ -178,6 +178,6 @@ public class DelegateImpl: NSObject, RCMusicEngineDelegate {
     }
     
     public func clear() {
-        DelegateImpl.instance.downloadingMusicId = nil
+        RCSMusicDelegate.instance.downloadingMusicId = nil
     }
 }
