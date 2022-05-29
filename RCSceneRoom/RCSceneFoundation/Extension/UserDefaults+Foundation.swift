@@ -14,6 +14,8 @@ private let RCAuthorizationKey              = "RCAuthorizationKey"
 private let RCFeedbackCountDown             = "RCFeedbackCountDown"
 private let RCFeedbackCompletion            = "RCFeedbackCompletion"
 private let RCFraudProtectionTriggerDateKey = "RCFraudProtectionTriggerDateKey"
+private let RCGameEngineAppCodeKey = "RCGameEngineAppCodeKey"
+
 
 public extension UserDefaults {
     func mobile() -> String? {
@@ -71,5 +73,12 @@ public extension UserDefaults {
     
     func fraudProtectionTriggerDate() -> Date? {
         return UserDefaults.standard.value(forKey: RCFraudProtectionTriggerDateKey) as? Date
+    }
+    
+    func gameEngineAppCode() -> String? {
+        return UserDefaults.standard.string(forKey: RCGameEngineAppCodeKey)
+    }
+    func set(gameEngineAppCode: String) {
+        UserDefaults.standard.setValue(gameEngineAppCode, forKey: RCGameEngineAppCodeKey)
     }
  }
