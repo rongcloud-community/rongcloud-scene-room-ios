@@ -13,6 +13,7 @@ public let gameRoomProvider = MoyaProvider<RCGameRoomService>(plugins: [RCServic
 public enum RCGameRoomService {
     case createGameRoom(name: String, themePictureUrl: String, backgroundUrl: String, kv: [[String: String]], isPrivate: Int, password: String?, roomType: Int, gameId: String)
     case gameEngineLogin(userId: String)
+    case fastJoin(gameId: String)
 }
 
 extension RCGameRoomService: RCServiceType {
@@ -22,6 +23,8 @@ extension RCGameRoomService: RCServiceType {
             return "mic/room/create"
         case .gameEngineLogin:
             return "mic/game/login"
+        case .fastJoin:
+            return "/mic/game/join"
         }
     }
     
@@ -31,6 +34,8 @@ extension RCGameRoomService: RCServiceType {
             return .post
         case .gameEngineLogin:
             return .post
+        case .fastJoin:
+            return .get
         }
     }
     
@@ -45,6 +50,9 @@ extension RCGameRoomService: RCServiceType {
         case let .gameEngineLogin(userId):
             let params: [String: Any] = ["userId": userId]
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case let .fastJoin(gameId):
+            let params: [String: Any] = ["gameId": gameId]
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }
 }

@@ -11,7 +11,7 @@ public enum HomeItem: Int, CaseIterable {
     case videoCall = 10
     case liveVideo = 3
     case radioRoom = 2
-    case gameRoom = 12
+    case gameRoom = 4
     
     public var name: String {
         switch self {
