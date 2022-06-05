@@ -11,6 +11,7 @@ import Moya
 public let gameRoomProvider = MoyaProvider<RCGameRoomService>(plugins: [RCServicePlugin])
 
 public enum RCGameRoomService {
+    case gameList
     case createGameRoom(name: String, themePictureUrl: String, backgroundUrl: String, kv: [[String: String]], isPrivate: Int, password: String?, roomType: Int, gameId: String)
     case gameEngineLogin(userId: String)
     case fastJoin(gameId: String)
@@ -19,6 +20,8 @@ public enum RCGameRoomService {
 extension RCGameRoomService: RCServiceType {
     public var path: String {
         switch self {
+        case .gameList:
+            return "mic/game/list"
         case .createGameRoom:
             return "mic/room/create"
         case .gameEngineLogin:
@@ -30,6 +33,8 @@ extension RCGameRoomService: RCServiceType {
     
     public var method: Moya.Method {
         switch self {
+        case .gameList:
+            return .get
         case .createGameRoom:
             return .post
         case .gameEngineLogin:
@@ -41,6 +46,8 @@ extension RCGameRoomService: RCServiceType {
     
     public var task: Task {
         switch self {
+        case .gameList:
+            return .requestPlain
         case let .createGameRoom(name, themePictureUrl, backgroundUrl, kv, isPrivate, password, roomType, gameId):
             var params: [String: Any] = ["name": name, "themePictureUrl": themePictureUrl, "kv": kv, "isPrivate": isPrivate, "backgroundUrl": backgroundUrl, "roomType": roomType, "gameId": gameId]
             if let password = password {
