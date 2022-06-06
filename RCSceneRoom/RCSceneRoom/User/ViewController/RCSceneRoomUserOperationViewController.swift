@@ -293,12 +293,8 @@ public class RCSceneRoomUserOperationViewController: UIViewController {
                     } else {
                         return [pickUpButton, kickOutButton]
                     }
-                case .gameRoom:
-                    if dependency.isSeating {
-                        return [pickDownButton, lockSeatButton, muteButton, kickOutButton]
-                    } else {
-                        return [pickUpButton, kickOutButton]
-                    }
+                case .gameRoom: return []
+                    
                 }
             case .manager:
                 guard
@@ -315,14 +311,10 @@ public class RCSceneRoomUserOperationViewController: UIViewController {
                 case .videoCall: return []
                 case .audioCall: return []
                 case .radioRoom: return [kickOutButton]
-                case .gameRoom:
-                    if dependency.isSeating {
-                        return [pickDownButton, lockSeatButton, muteButton, kickOutButton]
-                    } else {
-                        return [pickUpButton, kickOutButton]
-                    }
+                case .gameRoom: return []
                 }
-            case .audience: return []
+            case .audience:
+                return []
             }
         }()
         buttonlist.forEach { button in
