@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public let gameRoomProvider = MoyaProvider<RCGameRoomService>(plugins: [RCServicePlugin])
+public let gameRoomProvider = MoyaProvider<RCGameRoomService>(plugins: [RCSServiceLogger])
 
 public enum RCGameRoomService {
     case gameList
@@ -17,7 +17,7 @@ public enum RCGameRoomService {
     case fastJoin(gameId: String)
 }
 
-extension RCGameRoomService: RCServiceType {
+extension RCGameRoomService: RCSServiceType {
     public var path: String {
         switch self {
         case .gameList:

@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public let forbiddenProvider = MoyaProvider<RCForbiddenService>(plugins: [RCServicePlugin])
+public let forbiddenProvider = RCSProvider<RCForbiddenService>(plugins: [RCSServiceLogger])
 
 public enum RCForbiddenService {
     case forbiddenList(roomId: String)
@@ -16,7 +16,7 @@ public enum RCForbiddenService {
     case deleteForbidden(id: String)
 }
 
-extension RCForbiddenService: RCServiceType {
+extension RCForbiddenService: RCSServiceType {
     public var path: String {
         switch self {
         case let .forbiddenList(roomId):

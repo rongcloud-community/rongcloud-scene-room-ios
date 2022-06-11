@@ -7,7 +7,7 @@
 
 import Moya
 
-public let pkProvider = MoyaProvider<RCPKService>(plugins: [RCServicePlugin])
+public let pkProvider = RCSProvider<RCPKService>(plugins: [RCSServiceLogger])
 
 public enum RCPKService {
     case setPKState(roomId: String, toRoomId: String, status: Int)
@@ -15,7 +15,7 @@ public enum RCPKService {
     case isPK(roomId: String)
 }
 
-extension RCPKService: RCServiceType {
+extension RCPKService: RCSServiceType {
     
     public var path: String {
         switch self {

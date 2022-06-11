@@ -25,6 +25,7 @@ public class RCBroadcastManager: NSObject {
         }
     }
     public var currentView: RCRTCGiftBroadcastView?
+    public var currentClickedRoom: RCSceneRoom?
     
     public func add(_ message: RCGiftBroadcastMessage) {
         guard let content = message.content else { return }
@@ -70,6 +71,7 @@ extension RCBroadcastManager: RCRTCBroadcastDelegate {
     }
     
     public func broadcastViewDidClick(_ room: RCSceneRoom) {
+        currentClickedRoom = room
         delegate?.broadcastViewDidClick(room)
     }
 }
