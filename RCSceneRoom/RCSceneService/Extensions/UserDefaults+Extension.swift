@@ -60,6 +60,7 @@ public extension UserDefaults {
         UserDefaults.standard.removeObject(forKey: RCMobileKey)
         UserDefaults.standard.removeObject(forKey: RCTokenKey)
         UserDefaults.standard.removeObject(forKey: RCLoginUserKey)
+        UserDefaults.standard.removeObject(forKey: RCGameEngineAppCodeKey)
     }
  }
 

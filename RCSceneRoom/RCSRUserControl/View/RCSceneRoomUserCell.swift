@@ -53,7 +53,7 @@ class RCSceneRoomUserCell: UITableViewCell, Reusable {
         contentView.addSubview(lineView)
         
         avatarImageView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(23.resize)
+            $0.left.equalToSuperview().offset(15)
             $0.top.bottom.equalToSuperview().inset(8.resize)
             $0.size.equalTo(CGSize(width: 48.resize, height: 48.resize))
         }
