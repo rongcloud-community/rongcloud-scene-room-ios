@@ -15,6 +15,8 @@ public enum RCGameRoomService {
     case createGameRoom(name: String, themePictureUrl: String, backgroundUrl: String, kv: [[String: String]], isPrivate: Int, password: String?, roomType: Int, gameId: String)
     case gameEngineLogin(userId: String)
     case fastJoin(gameId: String)
+    case switchGame(gameId: String, gameState: Int, roomId: String)
+    case gameStatus(gameId: String, gameState: Int, roomId: String)
 }
 
 extension RCGameRoomService: RCSServiceType {
@@ -27,7 +29,11 @@ extension RCGameRoomService: RCSServiceType {
         case .gameEngineLogin:
             return "mic/game/login"
         case .fastJoin:
-            return "/mic/game/join"
+            return "mic/game/join"
+        case .switchGame:
+            return "mic/game/toggle/game_id"
+        case .gameStatus:
+            return "mic/game/toggle/game_status"
         }
     }
     
@@ -41,6 +47,10 @@ extension RCGameRoomService: RCSServiceType {
             return .post
         case .fastJoin:
             return .get
+        case .switchGame:
+            return .post
+        case .gameStatus:
+            return .post
         }
     }
     
@@ -60,6 +70,12 @@ extension RCGameRoomService: RCSServiceType {
         case let .fastJoin(gameId):
             let params: [String: Any] = ["gameId": gameId]
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
+        case let .switchGame(gameId, gameState, roomId):
+            let params: [String: Any] = ["gameId": gameId, "gameStatus": gameState, "roomId": roomId]
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case let .gameStatus(gameId, gameState, roomId):
+            let params: [String: Any] = ["gameId": gameId, "gameStatus": gameState, "roomId": roomId]
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
         }
     }
 }

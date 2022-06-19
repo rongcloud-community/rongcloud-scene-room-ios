@@ -18,8 +18,9 @@ public struct RCSceneRoom: Codable, Identifiable, Equatable {
     public var notice: String?
     
     public let gameId: String?
-    public let gameResp: RCSceneGameResp?
+    public var gameResp: RCSceneGameResp?
     public var gameStatus: Int?
+    
 }
 
 public struct RCSceneGameResp: Codable, Equatable {
