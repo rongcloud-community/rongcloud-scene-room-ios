@@ -168,7 +168,7 @@ extension VoiceRoomGiftSeatsView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return collectionView.dequeueReusableCell(for: indexPath, cellType: VoiceRoomGiftSeatCell.self)
-            .update(users[indexPath.row])
+            .update(users[indexPath.row], row: indexPath.row)
     }
 }
 
