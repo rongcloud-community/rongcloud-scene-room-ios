@@ -94,7 +94,13 @@ public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDe
     }
     
     public func setEarOpenMonitoring(_ on: Bool) {
-        openEarMonitoring = on && isHeadsetPluggedIn()
+        let isHeadsetPluggedIn = isHeadsetPluggedIn()
+        if !isHeadsetPluggedIn && on {
+            RCMusicEngine.shareInstance().openEarMonitoring = false
+            SVProgressHUD.showError(withStatus: "请插入耳机")
+            return
+        }
+        openEarMonitoring = on && isHeadsetPluggedIn
         RCMusicEngine.shareInstance().openEarMonitoring = openEarMonitoring
         RCRTCEngine.sharedInstance().audioEffectManager.enable(inEarMonitoring:openEarMonitoring)
 
