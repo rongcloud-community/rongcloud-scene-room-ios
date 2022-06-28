@@ -42,6 +42,7 @@ public struct RCSceneRoomUser: Codable, Equatable {
     public let userName: String
     public let portrait: String?
     public let status: Int?
+    public let sex: String?
     
     public var isFollow: Bool {
         return status == 1
@@ -55,10 +56,12 @@ public struct RCSceneRoomUser: Codable, Equatable {
     public init(userId: String,
                 userName: String,
                 portrait: String?,
-                status: Int?) {
+                status: Int?,
+                sex: String?) {
         self.userId = userId
         self.userName = userName
         self.portrait = portrait
         self.status = status
+        self.sex = sex
     }
 }
