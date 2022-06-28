@@ -23,9 +23,7 @@ public class RCSensor {
         ]
         options.enableHeatMap = true
         options.setValue(true, forKey: "enableTrackAppCrash")
-        #if DEBUG
-        options.enableLog = true
-        #endif
+        
         SensorsAnalyticsSDK.start(configOptions: options)
         
         SensorsAnalyticsSDK.sharedInstance()?.registerSuperProperties([
