@@ -1,57 +1,67 @@
 //
-//  RCSceneGiftViewController.swift
-//  RCE
+//  RCGameSceneGiftViewController.swift
+//  RCSceneRoom
 //
-//  Created by shaoshuai on 2021/5/25.
+//  Created by johankoi on 2022/6/29.
 //
 
-import UIKit
+import Foundation
 import SVProgressHUD
+import RCSceneRoom
 
-public protocol RCSceneGiftViewControllerDelegate: AnyObject {
-    func didSendGift(message: RCMessageContent)
+public protocol RCGameSceneGiftViewControllerDelegate: AnyObject {
+    func gameSceneDidSendGift(message: RCMessageContent)
 }
 
-public struct RCSceneGiftDependency {
+
+public struct RCGameSceneGiftDependency {
     let room: RCSceneRoom
     let seats: [String]
-    let userIds: [String]
     var roomId: String { room.roomId }
     var roomUserId: String { room.userId }
 
-    public init(room: RCSceneRoom, seats: [String], userIds: [String]) {
+    public init(room: RCSceneRoom, seats: [String]) {
         self.room = room
         self.seats = seats
-        self.userIds = userIds
     }
 }
 
-public final class RCSceneGiftViewController: UIViewController {
-    private let dependency: RCSceneGiftDependency
-    private weak var delegate: RCSceneGiftViewControllerDelegate?
+public final class RCGameSceneGiftViewController: UIViewController {
+    private let dependency: RCGameSceneGiftDependency
+    private weak var delegate: RCGameSceneGiftViewControllerDelegate?
     
     private lazy var gestureView = UIView()
     
     private lazy var containerView = UIView()
+
     private lazy var effectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .regular)
         return UIVisualEffectView(effect: blurEffect)
     }()
+    
+    
     private lazy var seatsView = VoiceRoomGiftSeatsView()
+    
+    
     private lazy var giftsView = VoiceRoomGiftListView()
     private lazy var sendView = VoiceRoomGiftSendView(self)
+
+    
     private var gift: VoiceRoomGift? {
         didSet {
             sendView.isEnabled = gift != nil && seats.count > 0
         }
     }
+    
+    
     private var seats: [VoiceRoomGiftSeat] = []{
         didSet {
             sendView.isEnabled = gift != nil && seats.count > 0
         }
     }
     
-   public init(dependency: RCSceneGiftDependency, delegate: RCSceneGiftViewControllerDelegate) {
+
+   public init(dependency: RCGameSceneGiftDependency, delegate: RCGameSceneGiftViewControllerDelegate) {
         self.dependency = dependency
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -60,6 +70,7 @@ public final class RCSceneGiftViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,9 +85,23 @@ public final class RCSceneGiftViewController: UIViewController {
     }
     
     private func fetchUsersInfo() {
-        let userIds = dependency.userIds
+        var onSeatUsers = [String]()
+        let seats = dependency.seats.filter { $0 != "" }
+        onSeatUsers.append(contentsOf: seats)
+    
+        let roomUserId = self.dependency.room.userId
+        
+        if !onSeatUsers.contains(roomUserId) {
+            onSeatUsers.insert(roomUserId, at: 0)
+        } else {
+            onSeatUsers.removeAll { $0 == roomUserId }
+            onSeatUsers.insert(roomUserId, at: 0)
+        }
+        
         var users = [VoiceRoomGiftSeat]()
-        var left = userIds.count {
+        
+        
+        var left = onSeatUsers.count {
             didSet {
                 guard left <= 0, users.count > 0 else { return }
                 users[0].setSelected(true)
@@ -84,14 +109,17 @@ public final class RCSceneGiftViewController: UIViewController {
             }
         }
         
-        userIds.forEach { userId in
+        onSeatUsers.forEach { userId in
             RCSceneUserManager.shared.fetchUserInfo(userId: userId) { [weak self] user in
                 guard let self = self else { return }
                 let index = self.dependency.seats.firstIndex(where: { $0 == userId })
+                
                 var mark = self.dependency.room.userId == userId ? "房主" : "观众"
+                
                 if let userIndex = index {
                     mark = self.dependency.room.userId == userId ? "房主" : "\(userIndex + 1)"
                 }
+                
                 let seatUser = VoiceRoomGiftSeat(userId: user.userId,
                                                  userAvatar: user.portraitUrl,
                                                  userMark: mark,
@@ -153,7 +181,8 @@ public final class RCSceneGiftViewController: UIViewController {
         guard sendView.count > 0 else { return }
         let room = dependency.room
         let count = sendView.count
-        let isAll = seats.count > 1 && seats.count >= dependency.userIds.count
+        
+        let isAll = seats.count > 1 && seats.count >= dependency.seats.count
         
         RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
             if isAll {
@@ -166,7 +195,7 @@ public final class RCSceneGiftViewController: UIViewController {
                 event.price = gift.price
                 ChatroomSendMessage(event,self?.dependency.roomId) { result in
                     switch result {
-                    case .success: self?.delegate?.didSendGift(message: event)
+                    case .success: self?.delegate?.gameSceneDidSendGift(message: event)
                     case .failure: ()
                     }
                 }
@@ -185,7 +214,7 @@ public final class RCSceneGiftViewController: UIViewController {
                         event.price = gift.price
                         ChatroomSendMessage(event,self?.dependency.roomId) { result in
                             switch result {
-                            case .success: self?.delegate?.didSendGift(message: event)
+                            case .success: self?.delegate?.gameSceneDidSendGift(message: event)
                             case .failure: ()
                             }
                         }
@@ -199,7 +228,7 @@ public final class RCSceneGiftViewController: UIViewController {
     }
 }
 
-extension RCSceneGiftViewController {
+extension RCGameSceneGiftViewController {
     private func setupConstraints() {
         view.addSubview(gestureView)
         view.addSubview(containerView)
@@ -248,19 +277,19 @@ extension RCSceneGiftViewController {
     }
 }
 
-extension RCSceneGiftViewController: VoiceRoomGiftListViewDelegate {
+extension RCGameSceneGiftViewController: VoiceRoomGiftListViewDelegate {
     func giftListView(_ view: VoiceRoomGiftListView, didSelected gift: VoiceRoomGift) {
         self.gift = gift
     }
 }
 
-extension RCSceneGiftViewController: VoiceRoomGiftSeatsViewDelegate {
+extension RCGameSceneGiftViewController: VoiceRoomGiftSeatsViewDelegate {
     func giftSeatsView(_ view: VoiceRoomGiftSeatsView, didSelected seats: [VoiceRoomGiftSeat]) {
         self.seats = seats
     }
 }
 
-extension RCSceneGiftViewController: VoiceRoomGiftSendViewDelegate {
+extension RCGameSceneGiftViewController: VoiceRoomGiftSendViewDelegate {
     public func onGiftSendButtonClicked() {
         send()
     }

@@ -66,11 +66,7 @@ final class VoiceRoomGiftSeatCell: UICollectionViewCell, Reusable {
     }
     
     public func update(_ user: VoiceRoomGiftSeat, row: Int) -> VoiceRoomGiftSeatCell {
-        var tagString = user.userMark
-        if tagString != "房主" {
-            tagString = "\(row + 1)"
-        }
-        nameLabel.text = tagString
+        nameLabel.text = user.userMark
        
         if let urlString = user.userAvatar, let url = URL(string: urlString) {
             let processor = KingfisherOptionsInfoItem.processor(RoundCornerImageProcessor(cornerRadius: 17.5.resize))
