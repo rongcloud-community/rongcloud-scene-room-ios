@@ -7,6 +7,7 @@
 
 import UIKit
 import SVProgressHUD
+import RCSceneRoom
 
 public class RCSceneRoomUserOperationViewController: UIViewController {
     private var dependency: RCSceneRoomUserOperationDependency
@@ -276,6 +277,7 @@ public class RCSceneRoomUserOperationViewController: UIViewController {
     }
     
     private func setupStackView() {
+    
         guard let scene = RCScene(rawValue: dependency.room.roomType ?? 1) else { return }
         let buttonlist: [UIButton] = {
             switch dependency.currentUserRole {

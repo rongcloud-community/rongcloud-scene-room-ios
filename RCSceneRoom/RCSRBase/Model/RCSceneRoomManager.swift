@@ -11,7 +11,7 @@ public enum RCScene: Int, CaseIterable {
     case videoCall  = 10
     case liveVideo  = 3
     case radioRoom  = 2
-    case gameRoom   = 12
+    case gameRoom   = 4
     case community  = 20
     case musicKTV   = 30
     case privateCall = 40

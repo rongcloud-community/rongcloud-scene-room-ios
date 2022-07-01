@@ -45,9 +45,9 @@ fileprivate extension String {
 }
 
 fileprivate extension NSMutableAttributedString {
-    func appendRoleIfNeeded(_ uId: String) {
+    func appendRoleIfNeeded(_ uId: String, _ isManager: Bool = false) {
         appendOwnerIconIfNeeded(uId)
-        appendManagerIconIfNeeded(uId)
+        appendManagerIconIfNeeded(uId,isManager)
     }
     private func appendOwnerIconIfNeeded(_ uId: String) {
         guard uId.isOwner else { return }
@@ -57,13 +57,18 @@ fileprivate extension NSMutableAttributedString {
         append(NSAttributedString(attachment: textAttachment))
         append(NSAttributedString(string: " "))
     }
-    private func appendManagerIconIfNeeded(_ uId: String) {
-        guard uId.isManager else { return }
-        let textAttachment = NSTextAttachment()
-        textAttachment.image = RCSCAsset.Images.chatroomMessageManager.image
-        textAttachment.bounds = CGRect(x: 0, y: -1.5, width: 13, height: 13)
-        append(NSAttributedString(attachment: textAttachment))
-        append(NSAttributedString(string: " "))
+    private func appendManagerIconIfNeeded(_ uId: String, _ isManager: Bool) {
+        var isAdd = isManager
+        if isAdd == false {
+            isAdd = uId.isManager
+        }
+        if isAdd {
+            let textAttachment = NSTextAttachment()
+            textAttachment.image = RCSCAsset.Images.chatroomMessageManager.image
+            textAttachment.bounds = CGRect(x: 0, y: -1.5, width: 13, height: 13)
+            append(NSAttributedString(attachment: textAttachment))
+            append(NSAttributedString(string: " "))
+        }
     }
 }
 
@@ -198,7 +203,7 @@ extension RCChatroomAdmin: RCChatroomSceneMessageProtocol {
     }
     public func attributeString() -> NSAttributedString {
         let result = NSMutableAttributedString()
-        result.appendRoleIfNeeded(userId)
+        result.appendRoleIfNeeded(userId, isAdmin)
         let nameAttributeString = NSAttributedString(string: userName, attributes: nameAttributes)
         result.append(nameAttributeString)
         let message = isAdmin ? " 成为管理员" : " 被撤回管理员"

@@ -7,6 +7,7 @@
 
 import Reusable
 import Kingfisher
+import Accelerate
 
 public struct VoiceRoomGiftSeat {
     let userId: String
@@ -64,8 +65,9 @@ final class VoiceRoomGiftSeatCell: UICollectionViewCell, Reusable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(_ user: VoiceRoomGiftSeat) -> VoiceRoomGiftSeatCell {
+    public func update(_ user: VoiceRoomGiftSeat, row: Int) -> VoiceRoomGiftSeatCell {
         nameLabel.text = user.userMark
+       
         if let urlString = user.userAvatar, let url = URL(string: urlString) {
             let processor = KingfisherOptionsInfoItem.processor(RoundCornerImageProcessor(cornerRadius: 17.5.resize))
             avatarImageView.kf.setImage(with: url,

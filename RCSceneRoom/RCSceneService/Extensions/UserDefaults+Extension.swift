@@ -10,6 +10,10 @@ import Foundation
 private let RCTokenKey                      = "RCTokenKey"
 private let RCMobileKey                     = "RCMobileKey"
 private let RCAuthorizationKey              = "RCAuthorizationKey"
+private let RCFeedbackCountDown             = "RCFeedbackCountDown"
+private let RCFeedbackCompletion            = "RCFeedbackCompletion"
+private let RCFraudProtectionTriggerDateKey = "RCFraudProtectionTriggerDateKey"
+private let RCGameEngineAppCodeKey = "RCGameEngineAppCodeKey"
 private let RCLoginUserKey                  = "RCLoginUserKey"
 
 public extension UserDefaults {
@@ -56,12 +60,10 @@ public extension UserDefaults {
         UserDefaults.standard.removeObject(forKey: RCMobileKey)
         UserDefaults.standard.removeObject(forKey: RCTokenKey)
         UserDefaults.standard.removeObject(forKey: RCLoginUserKey)
+        UserDefaults.standard.removeObject(forKey: RCGameEngineAppCodeKey)
     }
  }
 
-private let RCFeedbackCountDown             = "RCFeedbackCountDown"
-private let RCFeedbackCompletion            = "RCFeedbackCompletion"
-private let RCFraudProtectionTriggerDateKey = "RCFraudProtectionTriggerDateKey"
 
 public extension UserDefaults {
     
@@ -89,5 +91,12 @@ public extension UserDefaults {
     
     func fraudProtectionTriggerDate() -> Date? {
         return UserDefaults.standard.value(forKey: RCFraudProtectionTriggerDateKey) as? Date
+    }
+    
+    func gameEngineAppCode() -> String? {
+        return UserDefaults.standard.string(forKey: RCGameEngineAppCodeKey)
+    }
+    func set(gameEngineAppCode: String) {
+        UserDefaults.standard.setValue(gameEngineAppCode, forKey: RCGameEngineAppCodeKey)
     }
  }
