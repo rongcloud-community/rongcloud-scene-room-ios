@@ -19,7 +19,7 @@ public class RCSMusicDelegate: NSObject, RCMusicEngineDelegate {
     
     public func addLocalMusic(_ music: RCMusicInfo, completion: @escaping (Bool) -> Void) {
         
-        guard var music = music as? MusicInfo, let roomId = currentRoom?.roomId, let musicId = music.musicId, let localPath = music.localDataFilePath else {
+        guard let music = music as? MusicInfo, let roomId = currentRoom?.roomId, let musicId = music.musicId, let localPath = music.localDataFilePath else {
             SVProgressHUD.showError(withStatus: "参数错误")
             return completion(false)
         }

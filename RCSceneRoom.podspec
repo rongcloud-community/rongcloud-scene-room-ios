@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneRoom'
-  s.version          = '0.0.3.7'
+  s.version          = '0.0.4'
   s.summary          = 'Scene Room'
   s.description      = "Scene Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/rongcloud-community/rongcloud-scene-room-ios.git', :tag => s.version.to_s }
   
   # 2 - Version
-  s.ios.deployment_target = '13.0'
+  s.ios.deployment_target = '11.0'
   s.swift_version = '5.0'
   s.static_framework = true
   
@@ -31,7 +31,6 @@ Pod::Spec.new do |s|
     
     # 2 - dependency
     base.dependency 'Moya'
-    base.dependency 'SwiftyBeaver'
   end
   
   s.subspec 'RCSRAssets' do |assets|
@@ -71,20 +70,6 @@ Pod::Spec.new do |s|
     password.dependency 'SnapKit'
     password.dependency 'RCSceneRoom/RCSRBase'
     password.dependency 'RCSceneRoom/RCSRAssets'
-  end
-  
-  s.subspec 'RCSRUserControl' do |control|
-    # 1 - source
-    control.source_files = 'RCSceneRoom/RCSRUserControl/**/*.{h,swift}'
-    
-    # 2 - dependency
-    control.dependency 'SnapKit'
-    control.dependency 'Reusable'
-    control.dependency 'Kingfisher'
-    control.dependency 'SVProgressHUD'
-    control.dependency 'RCSceneRoom/RCSRBase'
-    control.dependency 'RCSceneRoom/RCSRAssets'
-    control.dependency 'RCSceneRoom/RCSceneService'
   end
   
   s.subspec 'RCSRChat' do |chat|
@@ -164,7 +149,6 @@ Pod::Spec.new do |s|
     room.dependency 'RCSceneRoom/RCSRChat'
     room.dependency 'RCSceneRoom/RCSceneGift'
     room.dependency 'RCSceneRoom/RCSceneMusic'
-    room.dependency 'RCSceneRoom/RCSRUserControl'
     room.dependency 'RCSceneRoom/RCSceneRoomSetting'
   end
   

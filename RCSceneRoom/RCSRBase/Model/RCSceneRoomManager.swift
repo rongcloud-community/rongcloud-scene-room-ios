@@ -5,17 +5,7 @@
 //  Created by shaoshuai on 2021/6/3.
 //
 
-public enum RCScene: Int, CaseIterable {
-    case audioRoom  = 1
-    case audioCall  = 11
-    case videoCall  = 10
-    case liveVideo  = 3
-    case radioRoom  = 2
-    case gameRoom   = 4
-    case community  = 20
-    case musicKTV   = 30
-    case privateCall = 40
-}
+public typealias RCScene = Int
 
 public enum SceneRoomUserType {
     case creator
@@ -29,7 +19,7 @@ public class SceneRoomManager {
     public let queue = DispatchQueue(label: "scene_room_queue")
     
     /// 当前场景类型，进入room时，用room.roomType
-    public static var scene = RCScene.audioRoom
+    public static var scene: RCScene = 0
     /// 当前所在房间
     public var currentRoom: RCSceneRoom?
     /// 管理员

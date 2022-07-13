@@ -231,7 +231,7 @@ public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDe
         let musicId = (currentPlayingMusic as? MusicInfo)?.id ?? 0
         let message = RCCommandMessage(name: kMusicBubbleViewEventName,
                                        data: String(musicId))!
-        var roomId: String? = RCRTCEngine.sharedInstance().room.roomId
+        let roomId: String? = RCRTCEngine.sharedInstance().room.roomId
         guard let roomId = roomId else { return }
         RCCoreClient.shared()
             .sendMessage(.ConversationType_CHATROOM,
@@ -239,9 +239,9 @@ public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDe
                          content: message,
                          pushContent: "",
                          pushData: "") { mId in
-                RCSRLog.debug("voice 同步歌曲信息消息发送成功")
+                debugPrint("voice 同步歌曲信息消息发送成功")
             } error: { code, mId in
-                RCSRLog.error("voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)")
+                print("voice 同步歌曲信息消息发送失败 code: \(code) mId: \(mId)")
             }
     }
     

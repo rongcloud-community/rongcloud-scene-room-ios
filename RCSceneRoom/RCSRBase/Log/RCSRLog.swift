@@ -1,4 +1,4 @@
 
-import SwiftyBeaver
+//import SwiftyBeaver
 
-public typealias RCSRLog = SwiftyBeaver
+//public typealias RCSRLog = SwiftyBeaver
