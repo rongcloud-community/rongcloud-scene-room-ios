@@ -88,9 +88,10 @@ public final class RCSceneGiftViewController: UIViewController {
             RCSceneUserManager.shared.fetchUserInfo(userId: userId) { [weak self] user in
                 guard let self = self else { return }
                 let index = self.dependency.seats.firstIndex(where: { $0 == userId })
+                print("xuefeng index = \(index)")
                 var mark = self.dependency.room.userId == userId ? "房主" : "观众"
                 if let userIndex = index {
-                    mark = self.dependency.room.userId == userId ? "房主" : "\(userIndex + 1)"
+                    mark = self.dependency.room.userId == userId ? "房主" : "\(userIndex)"
                 }
                 let seatUser = VoiceRoomGiftSeat(userId: user.userId,
                                                  userAvatar: user.portraitUrl,
