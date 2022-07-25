@@ -17,7 +17,7 @@ final class MusicDownloader {
         }
       guard let url = URL(string: music.url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else {
             completion?(false)
-            fatalError("music url is nil")
+            return debugPrint("music url is nil")
         }
         let destination: DownloadRequest.Destination = { _, _ in
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -45,7 +45,7 @@ final class MusicDownloader {
         }
         guard let fileUrl = music.fileUrl, let url = URL(string: fileUrl.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!) else {
             completion(false)
-            fatalError("music url is nil")
+            return debugPrint("music url is nil")
         }
         let destination: DownloadRequest.Destination = { _, _ in
             

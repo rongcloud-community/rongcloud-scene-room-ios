@@ -45,7 +45,7 @@ public class RCSMusicDataSource: NSObject, RCMusicEngineDataSource {
                          version: config.version) { _ in
                 print("register hifive success")
             } fail: { _ in
-                fatalError("register hifive failed")
+                debugPrint("register hifive failed")
             }
     }
     
