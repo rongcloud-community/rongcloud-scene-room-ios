@@ -8,6 +8,7 @@ target 'RCSceneExample' do
   # Pods for RCSceneExample
   
   pod 'RCSceneRoom/RCSceneRoom', :path => '../'
+  pod 'RCSceneRoom/RCSceneAnalytics', :path => '../'
   
 end
 
