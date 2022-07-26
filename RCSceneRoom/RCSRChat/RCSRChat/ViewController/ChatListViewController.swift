@@ -56,7 +56,7 @@ public class ChatListViewController: RCConversationListViewController {
     }
     
     @objc private func back() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.dismiss(animated: true, completion: nil)
         delegate?.chatListViewControllerBack()
     }
     
