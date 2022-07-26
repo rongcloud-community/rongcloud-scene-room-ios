@@ -5,19 +5,11 @@
 //  Created by 叶孤城 on 2021/5/25.
 //
 
-import UIKit
 import SVProgressHUD
-
-public protocol ChatListViewControllerProtocol: AnyObject {
-    func chatListViewControllerBack()
-}
-
 
 public class ChatListViewController: RCConversationListViewController {
     
     public var canCallComing: Bool = false
-    
-    public weak var delegate: ChatListViewControllerProtocol?
     
     public init(_ type: RCConversationType) {
         super.init(displayConversationTypes: [type.rawValue], collectionConversationType: [])
@@ -43,21 +35,6 @@ public class ChatListViewController: RCConversationListViewController {
         conversationListTableView.tableFooterView = UIView()
         
         navigationItem.title = "消息"
-        
-        
-        let backBtn = UIButton(type: .custom)
-        backBtn.setTitle("返回", for: .normal)
-        backBtn.addTarget(self, action: #selector(back), for: .touchUpInside)
-        backBtn.frame = CGRect(x: 0, y: 0, width: 60, height: 40)
-        backBtn.setTitleColor(.black, for: .normal)
-        let item = UIBarButtonItem(customView: backBtn)
-        self.navigationItem.leftBarButtonItem = item;
-        
-    }
-    
-    @objc private func back() {
-        navigationController?.popViewController(animated: true)
-        delegate?.chatListViewControllerBack()
     }
     
     public override func onSelectedTableRow(_ conversationModelType: RCConversationModelType, conversationModel model: RCConversationModel!, at indexPath: IndexPath!) {

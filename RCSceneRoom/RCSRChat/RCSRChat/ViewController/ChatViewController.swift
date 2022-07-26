@@ -6,18 +6,10 @@
 //
 
 import SVProgressHUD
-import UIKit
-
-
-public protocol ChatViewControllerProtocol: AnyObject {
-    func chatViewControllerBack()
-}
 
 public class ChatViewController: RCConversationViewController, UINavigationBarDelegate {
     
     public var canCallComing: Bool = false
-    
-    public weak var delegate: ChatViewControllerProtocol?
     
     public init(_ type: RCConversationType, userId: String) {
         super.init(conversationType: type, targetId: userId)
@@ -34,33 +26,18 @@ public class ChatViewController: RCConversationViewController, UINavigationBarDe
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-
         view.backgroundColor = UIColor(hexString: "#F5F6F9")
         view.subviews.forEach {
             $0.backgroundColor = UIColor(hexString: "#F5F6F9")
         }
-        
-        let backBtn = UIButton(type: .custom)
-        backBtn.setTitle("返回", for: .normal)
-        backBtn.addTarget(self, action: #selector(back), for: .touchUpInside)
-        backBtn.frame = CGRect(x: 0, y: 0, width: 60, height: 40)
-        backBtn.setTitleColor(.black, for: .normal)
-        let item = UIBarButtonItem(customView: backBtn)
-        self.navigationItem.leftBarButtonItem = item;
 
         refreshUserInfo()
-    
     }
     
     private func refreshUserInfo() {
         RCSceneUserManager.shared.fetchUserInfo(userId: targetId) { [weak self] user in
             self?.navigationItem.title = user.userName
         }
-    }
-    
-    @objc private func back() {
-        navigationController?.popViewController(animated: true)
-        delegate?.chatViewControllerBack()
     }
     
     public override func willDisplayMessageCell(_ cell: RCMessageBaseCell!, at indexPath: IndexPath!) {
