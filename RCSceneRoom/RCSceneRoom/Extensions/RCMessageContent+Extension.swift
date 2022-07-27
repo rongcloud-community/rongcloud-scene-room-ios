@@ -119,6 +119,10 @@ extension RCChatroomBarrage: RCChatroomSceneMessageProtocol {
         result.append(messageAttributeString)
         return result
     }
+    
+    public func isOwner() -> Bool {
+        return roomUserId == userId
+    }
 }
 
 extension RCChatroomKickOut: RCChatroomSceneMessageProtocol {
