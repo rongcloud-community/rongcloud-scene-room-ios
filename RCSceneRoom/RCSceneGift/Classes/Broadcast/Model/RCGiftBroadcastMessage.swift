@@ -33,7 +33,7 @@ public class RCGiftBroadcastMessage: RCMessageContent {
     
     var content: RCGiftBroadcast?
     
-    public override func encode() -> Data! {
+    public override func encode() -> Data {
         guard let content = content else { return Data() }
         do {
             let userId = content.userId
@@ -45,14 +45,14 @@ public class RCGiftBroadcastMessage: RCMessageContent {
             fatalError("RCGiftBroadcastMessage encode failed")
         }
     }
-    public override func decode(with data: Data!) {
+    public override func decode(with data: Data) {
         do {
             content = try JSONDecoder().decode(RCGiftBroadcast.self, from: data)
         } catch {
             debugPrint("RCGiftBroadcastMessage decode failed: \(error.localizedDescription)")
         }
     }
-    public override class func getObjectName() -> String! { "RC:RCGiftBroadcastMsg" }
+    public override class func getObjectName() -> String { "RC:RCGiftBroadcastMsg" }
     public override class func persistentFlag() -> RCMessagePersistent { .MessagePersistent_NONE }
 }
 

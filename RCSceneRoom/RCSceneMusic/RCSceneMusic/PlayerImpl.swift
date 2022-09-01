@@ -229,10 +229,10 @@ public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDe
     func sendCommandMessage() {
         //发送控制消息 同步歌曲信息到观众房间
         let musicId = (currentPlayingMusic as? MusicInfo)?.id ?? 0
-        let message = RCCommandMessage(name: kMusicBubbleViewEventName,
-                                       data: String(musicId))!
+        let message: RCCommandMessage? = RCCommandMessage(name: kMusicBubbleViewEventName,
+                                       data: String(musicId))
         let roomId: String? = RCRTCEngine.sharedInstance().room.roomId
-        guard let roomId = roomId else { return }
+        guard let roomId = roomId, let message = message else { return }
         RCCoreClient.shared()
             .sendMessage(.ConversationType_CHATROOM,
                          targetId: roomId,
