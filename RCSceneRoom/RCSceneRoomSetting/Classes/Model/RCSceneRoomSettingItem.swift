@@ -31,6 +31,12 @@ public enum Item {
     case beautySticker
     case beautyMakeup
     case beautyEffect
+    
+    case ktvSeatFree(free: Bool)
+    case ktvPickSong(pick: Int) // 默认为所有人都可以点歌 0,所有人可点歌;1仅房主可点歌
+    case ktvPickLimitSongCount(limit: Int) // 默认点歌上限1, 5 , 10
+    case ktvMusicTotalCount(count: Int) // 点歌总数上限: 15 30 50
+    case ktvScreenMusicBg
 }
 
 extension Item {
@@ -54,6 +60,12 @@ extension Item {
         case .beautySticker: return "贴纸"
         case .beautyMakeup: return "美妆"
         case .beautyEffect: return "特效"
+            
+        case .ktvSeatFree(let free): return free ? "自由点歌" : "申请点歌"
+        case .ktvPickSong(let pick): return pick == 0 ? "所有人可点歌" : "仅房主可点歌"
+        case .ktvPickLimitSongCount(let limit): return "点歌上限 \(limit)"
+        case .ktvMusicTotalCount(let count): return "点歌总数上限\(count)"
+        case .ktvScreenMusicBg: return "屏幕背景"
         }
     }
     
@@ -83,6 +95,12 @@ extension Item {
         case .beautySticker: return UIImage(roomSetting: "beauty_sticker")
         case .beautyMakeup: return UIImage(roomSetting: "beauty_makeup")
         case .beautyEffect: return UIImage(roomSetting: "beauty_effect")
+            
+        case .ktvSeatFree(let free): return UIImage(roomSetting: "beauty_makeup")
+        case .ktvPickSong(let pick): return UIImage(roomSetting: "beauty_makeup")
+        case .ktvPickLimitSongCount(let limit): return UIImage(roomSetting: "beauty_makeup")
+        case .ktvMusicTotalCount(let count): return UIImage(roomSetting: "beauty_makeup")
+        case .ktvScreenMusicBg: return UIImage(roomSetting: "beauty_makeup")
         }
     }
 }

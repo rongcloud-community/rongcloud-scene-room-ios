@@ -46,6 +46,7 @@ extension Item {
             return 17
         case .beautyEffect:
             return 18
+        default: return -1
         }
     }
 }
