@@ -46,6 +46,8 @@ extension Item {
             return 17
         case .beautyEffect:
             return 18
+        case .custom(let ip):
+            return ip.id
         default: return -1
         }
     }
