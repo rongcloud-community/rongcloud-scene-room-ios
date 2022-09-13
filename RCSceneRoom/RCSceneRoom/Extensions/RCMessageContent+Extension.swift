@@ -249,8 +249,8 @@ extension RCVRVoiceMessage: RCChatroomSceneVoiceMessage {
 }
 
 extension RCHQVoiceMessage: RCChatroomSceneVoiceMessage {
-    var userId: String { senderUserInfo.userId }
-    var userName: String { senderUserInfo.name ?? userId }
+    var userId: String { senderUserInfo?.userId ?? "" }
+    var userName: String { senderUserInfo?.name ?? userId }
     public func events() -> [NSValue : String] {
         let userIndex = userId.isMarked ? 2 : 0
         let range = NSRange(location: userIndex, length: userName.count)

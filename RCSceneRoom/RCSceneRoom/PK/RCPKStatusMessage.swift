@@ -44,7 +44,7 @@ public class RCPKStatusMessage: RCMessageContent {
         }
     }
     
-    public override class func getObjectName() -> String! { "RCMic:chrmPkStatusMsg" }
+    public override class func getObjectName() -> String { "RCMic:chrmPkStatusMsg" }
     public override class func persistentFlag() -> RCMessagePersistent { .MessagePersistent_NONE }
     
     public override func getSearchableWords() -> [String]! {

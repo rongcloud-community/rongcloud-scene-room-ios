@@ -29,7 +29,7 @@ public class RCPKGiftMessage: RCMessageContent {
         }
     }
     
-    public override class func getObjectName() -> String! { "RCMic:chrmPkNewMsg" }
+    public override class func getObjectName() -> String { "RCMic:chrmPkNewMsg" }
     public override class func persistentFlag() -> RCMessagePersistent { .MessagePersistent_NONE }
     
     public override func getSearchableWords() -> [String]! {

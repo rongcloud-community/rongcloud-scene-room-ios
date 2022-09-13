@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneRoom'
-  s.version          = '0.0.4.4'
+  s.version          = '0.0.4.5'
   s.summary          = 'Scene Room'
   s.description      = "Scene Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -112,7 +112,7 @@ Pod::Spec.new do |s|
     # 3 - dependency
     music.dependency 'SVProgressHUD'
     music.dependency 'RCMusicControlKit'
-    music.dependency 'RongCloudRTC/RongRTCLib'
+    music.dependency 'RongCloudRTC/RongRTCLib', '>= 5.2.5'
     music.dependency 'RCSceneRoom/RCSceneMessage'
     music.dependency 'RCSceneRoom/RCSceneService'
   end

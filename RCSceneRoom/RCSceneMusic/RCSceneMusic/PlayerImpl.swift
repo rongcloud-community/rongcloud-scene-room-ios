@@ -231,7 +231,7 @@ public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDe
         let musicId = (currentPlayingMusic as? MusicInfo)?.id ?? 0
         let message: RCCommandMessage? = RCCommandMessage(name: kMusicBubbleViewEventName,
                                        data: String(musicId))
-        let roomId: String? = RCRTCEngine.sharedInstance().room.roomId
+        let roomId: String? = RCRTCEngine.sharedInstance().room?.roomId
         guard let roomId = roomId, let message = message else { return }
         RCCoreClient.shared()
             .sendMessage(.ConversationType_CHATROOM,
@@ -282,7 +282,7 @@ public class RCSMusicPlayer: NSObject, RCMusicPlayer, RCRTCAudioMixerAudioPlayDe
 }
 
 extension RCSMusicPlayer: RCIMClientReceiveMessageDelegate {
-    public func onReceived(_ message: RCMessage!, left nLeft: Int32, object: Any!) {
+    public func onReceived(_ message: RCMessage, left nLeft: Int32, object: Any?) {
         guard
             let content = message.content as? RCCommandMessage,
             content.name == kMusicBubbleViewEventName
