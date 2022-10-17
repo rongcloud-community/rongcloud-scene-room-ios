@@ -16,7 +16,7 @@ public enum SceneRoomUserType {
 public class SceneRoomManager {
     public static let shared = SceneRoomManager()
     
-    public let queue = DispatchQueue(label: "scene_room_queue")
+    public let queue = DispatchQueue(label: "scene_room_queue", qos: .default)
     
     /// 当前场景类型，进入room时，用room.roomType
     public static var scene: RCScene = 0
