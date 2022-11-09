@@ -84,7 +84,7 @@ extension Item {
         case let .speaker(enable):
             return enable ? UIImage(roomSetting: "speaker_mute_on") : UIImage(roomSetting: "speaker_mute_off")
         case let .seatFree(free):
-            return free ? UIImage(roomSetting: "seat_mode_request") : UIImage(roomSetting: "seat_mode_free")
+            return free ? UIImage(roomSetting: "seat_mode_free") : UIImage(roomSetting: "seat_mode_request")
         case .roomName: return UIImage(roomSetting: "room_title")
         case .roomBackground: return UIImage(roomSetting: "room_background")
         case let .seatCount(count):
